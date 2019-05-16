@@ -1,0 +1,20 @@
+name: ComplexityScience
+
+dependencies:
+  - python=3.7
+  - jupyter
+  - numpy
+  - matplotlib
+  - seaborn
+  - pandas
+  - scipy
+  - networkx=2.*
+  - ffmpeg
+  - pip
+  - pip:
+    - empyrical-dist
+
+
+
+
+

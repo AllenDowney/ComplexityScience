@@ -2,17 +2,18 @@
 
 Allen Downey
 
-This tutorial material is based on my book,
-[*Think Complexity](http://greenteapress.com/wp/think-complexity-2e/),
-2nd edition, and a class I teach at Olin College.
+This is the repository for a tutorial on Complexity Science.  
 
+The material is based on my book,
+[*Think Complexity*](http://greenteapress.com/wp/think-complexity-2e/),
+2nd edition, and a class I teach at Olin College.
 
 ### Installation instructions
 
-Please try to install everything you need for this tutorial before you leave home!
+Please try to install everything you need for this tutorial ahead of time!
 You have two options:
 
-1. Install Jupyter on your laptop and download my code from GitHub.
+1. Install Jupyter and the other libraries on your laptop and download my code from GitHub.
 
 2. Run the Jupyter notebooks on a virtual machine on Binder.
 

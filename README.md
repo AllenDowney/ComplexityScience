@@ -1,37 +1,115 @@
-## Welcome to GitHub Pages
+## Complexity Science Tutorial
 
-You can use the [editor on GitHub](https://github.com/AllenDowney/ComplexityScience/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+Allen Downey
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+This tutorial material is based on my book,
+[*Think Complexity](http://greenteapress.com/wp/think-complexity-2e/),
+2nd edition, and a class I teach at Olin College.
 
-### Markdown
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+### Installation instructions
 
-```markdown
-Syntax highlighted code block
+Please try to install everything you need for this tutorial before you leave home!
+You have two options:
 
-# Header 1
-## Header 2
-### Header 3
+1. Install Jupyter on your laptop and download my code from GitHub.
 
-- Bulleted
-- List
+2. Run the Jupyter notebooks on a virtual machine on Binder.
 
-1. Numbered
-2. List
+I'll provide instructions for both.
 
-**Bold** and _Italic_ and `Code` text
 
-[Link](url) and ![Image](src)
+### Option 1
+
+Code for this workshop is in a Git repository on Github.  
+If you have a Git client installed, you should be able to download it by running:
+
+```
+git clone --depth 1 https://github.com/AllenDowney/ComplexityScience
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+Otherwise you can download the repository in [this zip file](https://github.com/AllenDowney/ComplexityScience/archive/master.zip).
+If you unzip it, you should get a directory named `Complexity Science`.
 
-### Jekyll Themes
+To run the code, you need Python 3 and the following libraries:
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/AllenDowney/ComplexityScience/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+```
+  - jupyter
+  - numpy
+  - matplotlib
+  - seaborn
+  - pandas
+  - scipy
+  - networkx=2.*
+  - ffmpeg
+  - empyrical-dist
+```
 
-### Support or Contact
+I highly recommend installing Anaconda, which is a Python distribution that makes it
+easy to install these libraries.  It works on Windows, Mac, and Linux, and because it does a
+user-level install, it will not interfere with other Python installations.
 
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+[Information about installing Anaconda is here](https://www.anaconda.com/distribution/).
+
+After installing Anaconda, you can create an environment that contains the libraries for
+this tutorial:
+
+```
+cd ComplexityScience
+conda env create -f environment.yml
+conda activate ComplexityScience
+```
+
+If you don't want to create an environment, you can install the libraries you need in
+the "base" environment
+
+```
+conda install jupyter numpy matplotlib seaborn pandas scipy networkx ffmpeg pip
+pip install empyrical-dist
+```
+
+To start Jupyter, run:
+
+```
+cd ComplexityScience
+jupyter notebook
+```
+
+Jupyter should launch your default browser or open a tab in an existing browser window.
+If not, the Jupyter server should print a URL you can use.  For example, when I launch Jupyter, I get
+
+```
+~/ComplexityScience$ jupyter notebook
+[I 10:03:20.115 NotebookApp] Serving notebooks from local directory: /home/downey/ComplexityScience
+[I 10:03:20.115 NotebookApp] 0 active kernels
+[I 10:03:20.115 NotebookApp] The Jupyter Notebook is running at: http://localhost:8888/
+```
+
+In this case, the URL is [http://localhost:8888](http://localhost:8888).  
+When you start your server, you might get a different URL.
+Whatever it is, if you paste it into a browser, you should should see a home page with a list of the
+notebooks in the repository.
+
+Click on `01_workshop.ipynb`.  It should open the first notebook for the tutorial.
+
+Select the cell with the import statements and press "Shift-Enter" to run the code in the cell.
+If it works and you get no error messages, **you are all set**.  
+
+If you get error messages about missing packages, you can install the packages you need.
+
+
+### Option 2
+
+You can run my notebooks in a virtual machine on Binder. To launch the VM, press this button:
+
+ [![Binder](http://mybinder.org/badge.svg)](http://mybinder.org:/repo/allendowney/ComplexityScience)
+
+You should see a home page with a list of the files in the repository.
+
+If you want to try the exercises, open `01_workshop.ipynb`. 
+You should be able to run the notebooks in your browser and try out the examples.  
+
+However, be aware that the virtual machine you are running is temporary.  
+If you leave it idle for more than an hour or so, it will disappear along with any work you have done.
+
+Special thanks to the generous people who run Binder, which makes it easy to share and reproduce computation.

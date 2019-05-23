@@ -9,48 +9,80 @@ This tutorial material is based on my book,
 
 ### Installation instructions
 
-Note:  Please try to install everything you need for this tutorial before you leave home!
-
-To prepare for this tutorial, you have two options:
+Please try to install everything you need for this tutorial before you leave home!
+You have two options:
 
 1. Install Jupyter on your laptop and download my code from GitHub.
 
 2. Run the Jupyter notebooks on a virtual machine on Binder.
 
-I'll provide instructions for both, but here's the catch: if everyone chooses Option 2, 
-the wireless network will fail and no one will be able to do the hands-on part of the workshop.
-
-So, I strongly encourage you to try Option 1 and only resort to Option 2 if you can't get Option 1 working.
+I'll provide instructions for both.
 
 
-
-#### Option 1A: If you already have Jupyter installed.
-
-To do the exercises, you need Python 3 with NumPy, SciPy, and matplotlib. 
-If you are not sure whether you have those modules already, the easiest way to check is to run my code and see if it works.
+### Option 1
 
 Code for this workshop is in a Git repository on Github.  
 If you have a Git client installed, you should be able to download it by running:
 
-    git clone https://github.com/AllenDowney/ComplexityScience
+```
+git clone --depth 1 https://github.com/AllenDowney/ComplexityScience
+```
 
-It should create a directory named `ComplexityScience`.
 Otherwise you can download the repository in [this zip file](https://github.com/AllenDowney/ComplexityScience/archive/master.zip).
+If you unzip it, you should get a directory named `Complexity Science`.
+
+To run the code, you need Python 3 and the following libraries:
+
+```
+  - jupyter
+  - numpy
+  - matplotlib
+  - seaborn
+  - pandas
+  - scipy
+  - networkx=2.*
+  - ffmpeg
+  - empyrical-dist
+```
+
+I highly recommend installing Anaconda, which is a Python distribution that makes it
+easy to install these libraries.  It works on Windows, Mac, and Linux, and because it does a
+user-level install, it will not interfere with other Python installations.
+
+[Information about installing Anaconda is here](https://www.anaconda.com/distribution/).
+
+After installing Anaconda, you can create an environment that contains the libraries for
+this tutorial:
+
+```
+cd ComplexityScience
+conda env create -f environment.yml
+conda activate ComplexityScience
+```
+
+If you don't want to create an environment, you can install the libraries you need in
+the "base" environment
+
+```
+conda install jupyter numpy matplotlib seaborn pandas scipy networkx ffmpeg pip
+pip install empyrical-dist
+```
 
 To start Jupyter, run:
 
-    cd ComplexityScience
-    jupyter notebook
+```
+cd ComplexityScience
+jupyter notebook
+```
 
 Jupyter should launch your default browser or open a tab in an existing browser window.
 If not, the Jupyter server should print a URL you can use.  For example, when I launch Jupyter, I get
 
 ```
-    ~/ThinkComplexity2$ jupyter notebook
-    [I 10:03:20.115 NotebookApp] Serving notebooks from local directory: /home/downey/ComplexityScience
-    [I 10:03:20.115 NotebookApp] 0 active kernels
-    [I 10:03:20.115 NotebookApp] The Jupyter Notebook is running at: http://localhost:8888/
-    [I 10:03:20.115 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+~/ComplexityScience$ jupyter notebook
+[I 10:03:20.115 NotebookApp] Serving notebooks from local directory: /home/downey/ComplexityScience
+[I 10:03:20.115 NotebookApp] 0 active kernels
+[I 10:03:20.115 NotebookApp] The Jupyter Notebook is running at: http://localhost:8888/
 ```
 
 In this case, the URL is [http://localhost:8888](http://localhost:8888).  
@@ -63,31 +95,12 @@ Click on `01_workshop.ipynb`.  It should open the first notebook for the tutoria
 Select the cell with the import statements and press "Shift-Enter" to run the code in the cell.
 If it works and you get no error messages, **you are all set**.  
 
-If you get error messages about missing packages, you can install the packages you need using your package manager, 
-or try Option 1B and install Anaconda.
+If you get error messages about missing packages, you can install the packages you need.
 
 
-#### Option 1B: If you don't already have Jupyter.
+### Option 2
 
-I highly recommend installing Anaconda, which is a Python distribution that contains everything
-you need for this tutorial.  It is easy to install on Windows, Mac, and Linux, and because it does a
-user-level install, it will not interfere with other Python installations.
-
-[Information about installing Anaconda is here](https://www.anaconda.com/distribution/).
-
-When you install Anaconda, you should get Jupyter by default, but if not, run
-
-    conda install jupyter
-
-Then go to Option 1A to make sure you can run my code.
-
-If you don't want to install Anaconda,
-[you can see some other options here](http://jupyter.readthedocs.io/en/latest/install.html).
-
-
-#### Option 2: only if Option 1 failed.
-
-You can run my notebook in a virtual machine on Binder. To launch the VM, press this button:
+You can run my notebooks in a virtual machine on Binder. To launch the VM, press this button:
 
  [![Binder](http://mybinder.org/badge.svg)](http://mybinder.org:/repo/allendowney/ComplexityScience)
 

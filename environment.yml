@@ -12,7 +12,7 @@ dependencies:
   - ffmpeg
   - pip
   - pip:
-    - empyrical-dist
+    - empiricaldist
 
 
 

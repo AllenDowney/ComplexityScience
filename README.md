@@ -1,5 +1,11 @@
 ## Complexity Science Tutorial
 
+
+I presented this tutorial at PyCon US 2017 (with Jason Woodard) and 2018, and at SciPy 2019. The most recent recording is [SciPy 2019](https://www.youtube.com/watch?v=ccA6ghSW1Iw); earlier ones are from PyCon [2018](https://www.youtube.com/watch?v=F0uiLhZmtN4) and [2017](https://www.youtube.com/watch?v=qHWhy3PWhes).
+
+This is one of [my workshops and tutorials](https://allendowney.github.io/#workshops).
+
+
 Allen Downey
 
 This is the repository for a tutorial on Complexity Science.  

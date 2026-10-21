@@ -357,7 +357,7 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="game-of-life">
 <h1>Game of Life<a class="headerlink" href="#game-of-life" title="Link to this heading">#</a></h1>
-<p>Examples and exercises for the tutorial <a class="reference external" href="https://allendowney.github.io/ComplexityScience/">Complexity Science</a>, based on <a class="reference external" href="https://thinkcomplex.com"><em>Think Complexity</em>, 2nd edition</a>.</p>
+<p>Examples and exercises for the tutorial <a class="reference external" href="https://allendowney.github.io/ComplexityScience/">Complexity Science</a>, based on <a class="reference external" href="https://allendowney.github.io/ThinkComplexity2/"><em>Think Complexity</em>, 2nd edition</a>.</p>
 <p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ComplexityScience/blob/master/soln/02_workshop.ipynb">Click here to run this notebook on Colab</a>. For the exercises, use <a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ComplexityScience/blob/master/02_workshop.ipynb">the version with blanks</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -576,7 +576,7 @@ What stable patterns can you identify?</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4e27bf8344c1e30dd7568431414a38822e7bed78ca06d667882fcbf554420175.png" src="_images/4e27bf8344c1e30dd7568431414a38822e7bed78ca06d667882fcbf554420175.png" />
+<img alt="_images/380ebaba87cf8a206dca4450ed4616e3b9de53844778a5f066f4d800bb039c2d.png" src="_images/380ebaba87cf8a206dca4450ed4616e3b9de53844778a5f066f4d800bb039c2d.png" />
 </div>
 </div>
 <section id="methuselahs">
@@ -651,17 +651,6 @@ What stable patterns can you identify?</p>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloaded Cell2D.py
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloaded Life.py
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloaded LifeRabbits.py
-</pre></div>
-</div>
-</div>
 </div>
 <p>To run my implementation of rabbits, open a terminal and run</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">LifeRabbits</span><span class="o">.</span><span class="n">py</span>
@@ -727,11 +716,6 @@ What stable patterns can you identify?</p>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloaded LifePuffer.py
-</pre></div>
-</div>
-</div>
 </div>
 <p>To see a puffer train run, open a terminal and run</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">LifePuffer</span><span class="o">.</span><span class="n">py</span>
@@ -751,16 +735,16 @@ What stable patterns can you identify?</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[1 0 1 1 1 0 0 0 0 1]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0 1 1 0 1 1 0 1 1 0]
+ [1 1 1 1 0 1 1 1 1 0]
+ [0 1 0 1 0 1 1 0 0 1]
+ [1 1 0 1 0 1 1 1 1 0]
  [0 1 1 1 0 1 0 0 1 1]
- [1 1 1 1 0 1 0 1 0 1]
- [0 1 0 0 1 0 1 0 0 1]
- [0 0 1 0 1 1 0 1 1 0]
- [0 0 0 1 1 1 0 1 1 0]
- [0 0 1 1 0 1 1 0 0 1]
- [1 0 0 1 1 1 0 0 0 1]
- [1 0 1 0 1 0 1 1 0 0]
- [1 1 0 0 1 0 0 1 0 1]]
+ [1 1 1 1 1 1 0 0 1 0]
+ [0 0 1 0 0 1 1 1 0 0]
+ [0 0 1 1 0 1 0 0 1 0]
+ [0 0 1 0 1 0 0 0 1 1]
+ [1 0 1 0 0 0 1 0 0 1]]
 </pre></div>
 </div>
 </div>
@@ -788,14 +772,14 @@ What stable patterns can you identify?</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0 0 0 0 0 0 0 0 0 0]
- [0 0 0 0 0 1 1 0 0 0]
- [0 0 0 0 0 1 0 1 0 0]
  [0 0 0 0 0 0 0 0 0 0]
- [0 0 1 0 0 0 0 0 0 0]
+ [0 0 0 1 0 0 0 0 0 0]
+ [0 0 0 1 0 0 0 0 0 0]
  [0 0 0 0 0 0 0 0 0 0]
- [0 0 1 0 0 0 0 1 0 0]
+ [0 0 0 0 0 0 0 0 1 0]
  [0 0 0 0 0 0 0 1 1 0]
- [0 0 1 0 0 0 1 1 0 0]
+ [0 1 1 0 0 1 0 0 1 0]
+ [0 0 1 0 1 1 0 1 1 0]
  [0 0 0 0 0 0 0 0 0 0]]
 </pre></div>
 </div>
@@ -818,16 +802,16 @@ What stable patterns can you identify?</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0 0 0 0 1 0 0 0 1 1]
- [0 0 0 0 0 1 1 0 0 1]
- [1 0 0 0 0 1 0 1 0 1]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[1 0 0 0 1 1 0 0 1 0]
  [1 0 0 0 0 0 0 0 0 1]
- [0 0 1 0 0 0 0 0 0 1]
+ [0 0 0 1 0 0 0 0 0 1]
+ [1 0 0 1 0 0 0 0 0 0]
  [0 0 0 0 0 0 0 0 0 1]
- [0 0 1 0 0 0 0 1 0 1]
+ [1 0 0 0 0 0 0 0 1 1]
  [0 0 0 0 0 0 0 1 1 0]
- [1 0 1 0 0 0 1 1 0 0]
- [1 1 0 1 0 1 1 1 1 0]]
+ [0 1 1 0 0 1 0 0 1 1]
+ [0 0 1 0 1 1 0 1 1 1]
+ [0 1 0 1 0 0 0 0 1 1]]
 </pre></div>
 </div>
 </div>
@@ -847,16 +831,16 @@ What stable patterns can you identify?</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0 0 0 0 1 0 0 0 1 1]
- [0 0 0 0 0 1 1 0 0 1]
- [1 0 0 0 0 1 0 1 0 1]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[1 0 0 0 1 1 0 0 1 0]
  [1 0 0 0 0 0 0 0 0 1]
- [0 0 1 0 0 0 0 0 0 1]
+ [0 0 0 1 0 0 0 0 0 1]
+ [1 0 0 1 0 0 0 0 0 0]
  [0 0 0 0 0 0 0 0 0 1]
- [0 0 1 0 0 0 0 1 0 1]
+ [1 0 0 0 0 0 0 0 1 1]
  [0 0 0 0 0 0 0 1 1 0]
- [1 0 1 0 0 0 1 1 0 0]
- [1 1 0 1 0 1 1 1 1 0]]
+ [0 1 1 0 0 1 0 0 1 1]
+ [0 0 1 0 1 1 0 1 1 1]
+ [0 1 0 1 0 0 0 0 1 1]]
 </pre></div>
 </div>
 </div>
@@ -873,16 +857,16 @@ What stable patterns can you identify?</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0 0 0 0 1 0 0 0 1 1]
- [0 0 0 0 0 1 1 0 0 1]
- [1 0 0 0 0 1 0 1 0 1]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[1 0 0 0 1 1 0 0 1 0]
  [1 0 0 0 0 0 0 0 0 1]
- [0 0 1 0 0 0 0 0 0 1]
+ [0 0 0 1 0 0 0 0 0 1]
+ [1 0 0 1 0 0 0 0 0 0]
  [0 0 0 0 0 0 0 0 0 1]
- [0 0 1 0 0 0 0 1 0 1]
+ [1 0 0 0 0 0 0 0 1 1]
  [0 0 0 0 0 0 0 1 1 0]
- [1 0 1 0 0 0 1 1 0 0]
- [1 1 0 1 0 1 1 1 1 0]]
+ [0 1 1 0 0 1 0 0 1 1]
+ [0 0 1 0 1 1 0 1 1 1]
+ [0 1 0 1 0 0 0 0 1 1]]
 </pre></div>
 </div>
 </div>

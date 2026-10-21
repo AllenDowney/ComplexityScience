@@ -1,10 +1,10 @@
-""" Code example from Complexity and Computation, a book about
+""" Code example from Think Complexity, 2nd edition, a book about
 exploring complexity science with Python.  Available free from
 
-http://greenteapress.com/complexity
+https://thinkcomplex.com
 
 Copyright 2016 Allen Downey
-MIT License: http://opensource.org/licenses/MIT
+MIT License: https://opensource.org/license/MIT
 """
 from __future__ import print_function, division
 
@@ -17,7 +17,7 @@ from Life import Life, LifeViewer
 def main(script, *args):
     """Constructs the rabbits methusela.
 
-    http://www.argentum.freeserve.co.uk/lex_r.htm#rabbits
+    https://web.archive.org/web/20081221152607/http://www.argentum.freeserve.co.uk/lex_r.htm#rabbits
     """
 
     rabbits = [

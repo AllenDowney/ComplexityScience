@@ -77,6 +77,6 @@ Numbered tasks for tracking work. Each task has a permanent number; add new task
 
 (For Allen to decide.)
 
-1. `02` says to run `LifeRabbits.py` and `LifePuffer.py` "in a terminal", which Colab users can't do (and they open a Matplotlib window). Options: show them in the notebook with `Life.animate`, drop the instructions, or leave them.
-2. `Cell2D.py` docstring tells readers to install ffmpeg for animation in the notebook; the notebooks animate with `clear_output` now (commit "Don't need ffmpeg any more", 2019).
-3. Helper scripts say "Complexity and Computation" and link `http://greenteapress.com/complexity`; the book is *Think Complexity*, 2nd edition (`https://thinkcomplex.com`).
+1. ~~`02` says to run `LifeRabbits.py` and `LifePuffer.py` "in a terminal", which Colab users can't do.~~ Allen (2026-10-21): keep the instructions and say they need a local install. Done: "This needs a local installation of Python; it doesn't work on Colab." in both cells.
+2. ~~`Cell2D.py` and `Life.py` docstrings tell readers to install ffmpeg for animation in the notebook.~~ Allen (2026-10-21): removed (the notebooks animate with `clear_output`; commit "Don't need ffmpeg any more", 2019).
+3. ~~Helper scripts say "Complexity and Computation" and link `http://greenteapress.com/complexity`.~~ Allen (2026-10-21): now *Think Complexity*, 2nd edition, `https://thinkcomplex.com`; MIT link → `https://opensource.org/license/MIT`. The dead rabbits link in `LifeRabbits.py` now points to the same web.archive.org copy the notebook uses.

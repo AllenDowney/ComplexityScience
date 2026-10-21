@@ -1,10 +1,10 @@
-""" Code example from Complexity and Computation, a book about
+""" Code example from Think Complexity, 2nd edition, a book about
 exploring complexity science with Python.  Available free from
 
-http://greenteapress.com/complexity
+https://thinkcomplex.com
 
 Copyright 2016 Allen Downey
-MIT License: http://opensource.org/licenses/MIT
+MIT License: https://opensource.org/license/MIT
 """
 
 import numpy as np
@@ -12,15 +12,6 @@ import matplotlib.pyplot as plt
 
 from matplotlib import animation
 from scipy.signal import convolve2d
-
-"""
-For animation to work in the notebook, you might have to install
-ffmpeg.  On Ubuntu and Linux Mint, the following should work.
-
-    sudo add-apt-repository ppa:mc3man/trusty-media
-    sudo apt-get update
-    sudo apt-get install ffmpeg
-"""
 
 class Cell2D:
     """Parent class for 2-D cellular automata."""

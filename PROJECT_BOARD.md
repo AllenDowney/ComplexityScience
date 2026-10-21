@@ -47,10 +47,13 @@ Numbered tasks for tracking work. Each task has a permanent number; add new task
 - [x] README rewritten (2026-10-21): title, badge, author, self-study line, abstract (from the notebooks), *Think Complexity* 2e, hub link, level (introductory; basic Python, Allen), length (about 3 hours, Allen), outline, notebook table with Colab links, slides (link from Allen), recordings (SciPy 2019 with tag `scipy-2019`; PyCon US 2018, 2017), running instructions (Colab, pip, mamba), next steps, license (code MIT, text CC BY-NC-SA 4.0); `LICENSE` exists (MIT). Binder and Anaconda instructions dropped. All links return 200
 
 **6. Site and visibility** (self-study; Allen chose a small Jupyter Book site on `gh-pages`, 2026-10-21)
-- [ ] `jb/` from the BayesMadeSimple template: landing page plus the three solution notebooks
-- [ ] SEO checklist in a scratch build; Allen reviews the descriptions
-- [ ] Publish to `gh-pages`, switch Pages from `master` / to `gh-pages`, request a build, then delete the root `_config.yml`; check the live site; `robots.txt` sitemap line; Search Console; Task 22
-- [ ] Hub entry; repo description and topics (add `jupyter-book`)
+- [x] `jb/` from the BayesMadeSimple template (2026-10-21): landing page (`index.md`) plus the three solution notebooks, copied in by `prep_notebooks.py` as `segregation`, `game_of_life`, `scale_free_networks` (clean URLs; their H1s are already distinct, so only the descriptions are added). Executed at build time (`force`); the downloads they make in `jb/` are in `.gitignore`
+- [x] SEO checklist in a scratch build: sitemap lists the four pages; each has one description, `og:description`, canonical, the *Think Complexity* cover as `og:image`, and the counter. Allen approved the four descriptions (2026-10-21)
+- [x] Published with `./build.sh publish` (new `gh-pages` branch); Pages switched from `master` / to `gh-pages`; root `_config.yml` deleted; build requested. Live: the four pages and `sitemap.xml` return 200, `PROJECT_BOARD.html`, `CLAUDE.html`, `README.html` 404; description, `og:image`, counter present
+- [x] `Sitemap:` line in `~/AllenDowney.github.io/robots.txt` (pushed, `0efcb78`)
+- [ ] Allen submits the sitemap in Search Console; tick in GreenTeaPress Task 22
+- [x] *Think Complexity* links (README, landing page, notebook subtitles) → `allendowney.github.io/ThinkComplexity2/`, as on the hub (Allen, 2026-10-21); site republished. Hub entry still accurate, no change
+- [x] Repo description (Allen approved) and topics `agent-based-modeling`, `game-of-life`, `networkx` set with `gh` (Allen chose not to add `jupyter-book`); `scripts/repo_about.sh` entry updated (GreenTeaPress, uncommitted)
 
 **7. Close**
 - [ ] Tag `2026-refresh`; note in GreenTeaPress Task 24

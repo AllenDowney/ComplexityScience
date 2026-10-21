@@ -7,11 +7,18 @@ notebooks = glob("*workshop.ipynb")
 text = '# Solution'
 replacement = '# Solution goes here'
 
+colab_text = '[Click here to run this notebook on Colab]'
+colab_url = 'https://colab.research.google.com/github/AllenDowney/ComplexityScience/blob/master/'
+
 # Search through each notebook
 for ipath in notebooks:
     ntbk = nbf.read(ipath, nbf.NO_CONVERT)
 
     for cell in ntbk.cells:
+        # point the Colab link at the version with blanks
+        if cell['source'].startswith(colab_text):
+            cell['source'] = f'{colab_text}({colab_url}{ipath})'
+
         # remove tags
         if 'tags' in cell['metadata']:
             cell['metadata']['tags'] = []

@@ -34,12 +34,13 @@ Numbered tasks for tracking work. Each task has a permanent number; add new task
 - [ ] Status badge in the README
 
 **3. Colab**
-- [ ] "Click here to run this notebook on Colab" cell after the title of each notebook; solutions also link to the version with blanks; Colab links in the README
+- [x] "Click here to run this notebook on Colab" cell after the title of all six notebooks; solutions also link to the version with blanks (2026-10-21). `remove_soln.py` points the student version's cell at itself. README table: step 5
 - [ ] Allen runs one notebook on Colab end to end
 
 **4. Text**
-- [ ] Typos, wrong docstrings, broken links (http → https)
-- [ ] Notebook layout: H1 title, Colab cell, `##` sections, copyright ("2016–2026" / "2019–2026") and licenses (code MIT, text CC) at the end; same in student and solution versions
+- [x] Typos and docstrings (2026-10-21, solutions, carried into the student versions by `remove_soln.py`): `01` missing closing quote after "Models of Segregation", "a visualization the grid", "Choose and unhappy agent", `grip:` → `grid:` (2 docstrings); `02` "Here's are", "blinkers, blocks, and beehives,", "natually", "Methuselas" (heading), "initial conditional run", "implementaion", "look up table"; `03` "intereted", "Facecook", "they is evidence", "random seen". Helper scripts: see Content issues 1–3. codespell's other hits are base64 image data or "still lifes" (the Life term)
+- [x] Links: `thinkcomplex.com/schell` and Achim Flammenkamp's page http → https; NetworkX source link `blob/master` → `blob/main`; missing periods after two links. `thinkcomplex.com` short links kept (they redirect by design). Wikipedia links returned 429 (rate limit) from here, not checked
+- [x] Notebook layout: H1 title plus one-line subtitle ("Examples and exercises for the tutorial [Complexity Science](…), based on *Think Complexity*, 2nd edition"), Colab cell, `##` sections (`01`'s second H1 "The Big Sort" → `##`); copyright (`01`, `02` "2019–2026"; `03` "2016–2026") and licenses (code MIT, text CC BY-NC-SA 4.0, Allen 2026-10-21) in a cell at the end, replacing the trailing empty code cell. All six notebooks validate; one ATX H1 each
 - [ ] Everything else under "Content issues"
 
 **5. README in the standard shape**
@@ -80,3 +81,7 @@ Numbered tasks for tracking work. Each task has a permanent number; add new task
 1. ~~`02` says to run `LifeRabbits.py` and `LifePuffer.py` "in a terminal", which Colab users can't do.~~ Allen (2026-10-21): keep the instructions and say they need a local install. Done: "This needs a local installation of Python; it doesn't work on Colab." in both cells.
 2. ~~`Cell2D.py` and `Life.py` docstrings tell readers to install ffmpeg for animation in the notebook.~~ Allen (2026-10-21): removed (the notebooks animate with `clear_output`; commit "Don't need ffmpeg any more", 2019).
 3. ~~Helper scripts say "Complexity and Computation" and link `http://greenteapress.com/complexity`.~~ Allen (2026-10-21): now *Think Complexity*, 2nd edition, `https://thinkcomplex.com`; MIT link → `https://opensource.org/license/MIT`. The dead rabbits link in `LifeRabbits.py` now points to the same web.archive.org copy the notebook uses.
+4. `03`, the cell before the friends plots: "I'll use `EstimatedPdf`, which computes a smooth Probability Density Function", but the code uses `Pmf.from_seq(...).plot()`.
+5. `03`, "Cumulative distributions": "the Facebook data, the WS model, and the BA model", but this notebook has no WS model.
+6. `01`, The Big Sort: the exercise template is `step(grid, num_comps=2)`, but the solution is `step(grid)` with `num_comps = 2` hard-coded (its docstring still lists `num_comps`), so the next exercise ("Experiment with different values of `num_comps`") needs an edit inside the function.
+7. `03` has a commented-out cell that silenced `mplDeprecation` warnings (`matplotlib.cbook.mplDeprecation` no longer exists); dead code.

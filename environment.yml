@@ -1,19 +1,22 @@
 name: ComplexityScience
-
+channels:
+  - conda-forge
 dependencies:
-  - python=3.7
+  - python=3.13
   - jupyter
   - numpy
+  - scipy
   - matplotlib
   - seaborn
-  - pandas
-  - scipy
-  - networkx=2.*
+  - networkx
   - pip
+  # for testing
+  - pytest
+  - nbmake
+  # for building the site (jb/build.sh)
+  - jupyter-book<2
+  - sphinx-sitemap
+  - sphinxext-opengraph
+  - ghp-import
   - pip:
     - empiricaldist
-
-
-
-
-

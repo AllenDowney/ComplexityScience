@@ -16,9 +16,13 @@ for ipath in notebooks:
         if 'tags' in cell['metadata']:
             cell['metadata']['tags'] = []
 
+        # remove execution timing
+        cell['metadata'].pop('execution', None)
+
         # remove output
         if 'outputs' in cell:
             cell['outputs'] = []
+            cell['execution_count'] = None
 
         # remove solutions
         if cell['source'].startswith(text):

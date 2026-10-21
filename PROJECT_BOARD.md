@@ -18,18 +18,18 @@ Numbered tasks for tracking work. Each task has a permanent number; add new task
 - [x] Tags (2026-10-21): `scipy-2019` at `8122b92` ("Fixing boundary", 2019-07-09 08:50 Austin time, the tutorial day; Allen chose it over `c45df1b`, 2019-05-23); `pre-refresh-2026` at `e64be01`. PyCon 2017 and 2018 predate the repo (first commit 2019-05-14), so no tags
 - [ ] README: each recording lists its tag (step 5)
 - [x] Inventory (below)
-- [ ] Environment: `mamba env create -f environment.yml` (after `environment.yml` is rewritten in step 1)
+- [x] Environment: `mamba env create -f environment.yml` (created as `ComplexityScience`, 2026-10-21: Python 3.13.16, NumPy 2.5, SciPy 1.18, Matplotlib 3.11, NetworkX 3.7, Seaborn 0.13, empiricaldist 0.10)
 
 **1. Runs in a current environment**
-- [ ] `environment.yml` (conda-forge, Python 3.13, pytest, nbmake, site build tools), `requirements.txt`, `requirements-dev.txt`
-- [ ] Install/download cell in each notebook (empiricaldist in `03`; helpers in `02`; data in `03`)
-- [ ] Breakage and deprecation warnings (NumPy 2, SciPy, Matplotlib, NetworkX 3, Seaborn)
-- [ ] `np.set_printoptions(legacy='1.25')` in the import cell; re-run the solutions saved with outputs
-- [ ] Data URLs (helpers and `facebook_combined.txt.gz` come from raw files on `master`)
+- [x] `environment.yml` rewritten (2026-10-21): conda-forge, Python 3.13, Jupyter, NumPy, SciPy, Matplotlib, Seaborn, NetworkX (the `networkx=2.*` pin dropped), pytest, nbmake, the Jupyter Book tools, empiricaldist from pip. `requirements.txt` (unpinned; Colab lacks only empiricaldist) and `requirements-dev.txt` (adds Jupyter, pytest, nbmake)
+- [x] Install/download cells: `03`'s old `IN_COLAB` / `!pip install` cell replaced by a try/import `%pip install -q empiricaldist` cell (the SurvivalAnalysisPython pattern) and moved to the first code cell. `01` needs nothing. The existing `download()` cells in `02` (helper scripts) and `03` (Facebook data) already skip files that exist and use absolute URLs; left where they are
+- [x] Breakage and deprecation warnings: none. All three solutions run with Deprecation/Future/PendingDeprecation/User/Runtime warnings as errors (`01` 12 s, `02` 83 s (animations), `03` 11 s). The helper scripts (`Life.py`, `LifeRabbits.py`, `LifePuffer.py`) run with `-W error` too
+- [x] `np.set_printoptions(legacy='1.25')` in the import cell of all six notebooks; re-ran the three solutions in place (no `np.float64(`/`np.int64(` in outputs). Student versions rebuilt from the solutions with `remove_soln.py`, which now also drops nbconvert's execution-timing metadata and execution counts (a rebuild before the edits reproduced the committed student versions exactly)
+- [x] Data URLs: the four helper scripts and `facebook_combined.txt.gz` on `raw/master`, and the SNAP original, return 200
 - [ ] Replace Binder and Anaconda instructions in the README with Colab first, then pip or mamba (step 5)
 
 **2. Tests and CI**
-- [ ] `pytest --nbmake` on the solutions (and the versions with blanks, if they run)
+- [ ] `pytest --nbmake` on the solutions and the versions with blanks (the blanks are `# Solution goes here` comments, so the student versions run: all three pass, 63 s)
 - [ ] `.github/workflows/tests.yml`; watch the first run
 - [ ] Status badge in the README
 
@@ -76,3 +76,7 @@ Numbered tasks for tracking work. Each task has a permanent number; add new task
 ### Content issues
 
 (For Allen to decide.)
+
+1. `02` says to run `LifeRabbits.py` and `LifePuffer.py` "in a terminal", which Colab users can't do (and they open a Matplotlib window). Options: show them in the notebook with `Life.animate`, drop the instructions, or leave them.
+2. `Cell2D.py` docstring tells readers to install ffmpeg for animation in the notebook; the notebooks animate with `clear_output` now (commit "Don't need ffmpeg any more", 2019).
+3. Helper scripts say "Complexity and Computation" and link `http://greenteapress.com/complexity`; the book is *Think Complexity*, 2nd edition (`https://thinkcomplex.com`).

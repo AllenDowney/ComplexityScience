@@ -6,9 +6,6 @@ http://greenteapress.com/complexity
 Copyright 2016 Allen Downey
 MIT License: http://opensource.org/licenses/MIT
 """
-from __future__ import print_function, division
-
-import sys
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -26,7 +23,7 @@ ffmpeg.  On Ubuntu and Linux Mint, the following should work.
 """
 
 class Cell2D:
-    """Implements Conway's Game of Life."""
+    """Parent class for 2-D cellular automata."""
 
     def __init__(self, n, m=None):
         """Initializes the attributes.

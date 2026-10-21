@@ -8,7 +8,7 @@ Numbered tasks for tracking work. Each task has a permanent number; add new task
 
 ## Task 1: Refresh
 
-**Status:** DONE (2026-10-21), except Allen's Search Console sitemap submission
+**Status:** DONE (2026-10-21)
 
 **Context:** ComplexityScience is a **self-study** workshop (GreenTeaPress Task 24): not offered live now, but the notebooks are maintained and run on Colab. Based on *Think Complexity*, 2nd edition. Guide: the "Refresh checklist" (self-study variant) in `~/GreenTeaPress/plans/workshops.md`; BayesMadeSimple and CompStats are worked examples, and BayesianDecisionAnalysis is the self-study precedent. 40 stars. Given at PyCon US 2017 (with Jason Woodard), PyCon US 2018, and SciPy 2019; the most recent recording is [SciPy 2019](https://www.youtube.com/watch?v=ccA6ghSW1Iw).
 
@@ -51,7 +51,7 @@ Numbered tasks for tracking work. Each task has a permanent number; add new task
 - [x] SEO checklist in a scratch build: sitemap lists the four pages; each has one description, `og:description`, canonical, the *Think Complexity* cover as `og:image`, and the counter. Allen approved the four descriptions (2026-10-21)
 - [x] Published with `./build.sh publish` (new `gh-pages` branch); Pages switched from `master` / to `gh-pages`; root `_config.yml` deleted; build requested. Live: the four pages and `sitemap.xml` return 200, `PROJECT_BOARD.html`, `CLAUDE.html`, `README.html` 404; description, `og:image`, counter present
 - [x] `Sitemap:` line in `~/AllenDowney.github.io/robots.txt` (pushed, `0efcb78`)
-- [ ] Allen submits the sitemap in Search Console; tick in GreenTeaPress Task 22
+- [x] Allen submitted the sitemap in Search Console (2026-10-21); GreenTeaPress Task 22 is Allen's
 - [x] *Think Complexity* links (README, landing page, notebook subtitles) → `allendowney.github.io/ThinkComplexity2/`, as on the hub (Allen, 2026-10-21); site republished. Hub entry still accurate, no change
 - [x] Repo description (Allen approved) and topics `agent-based-modeling`, `game-of-life`, `networkx` set with `gh` (Allen chose not to add `jupyter-book`); `scripts/repo_about.sh` entry updated (GreenTeaPress, uncommitted)
 

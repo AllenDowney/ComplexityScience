@@ -8,7 +8,7 @@ This is self-study material: the workshop is not offered live now, but the noteb
 
 This tutorial is a hands-on introduction to complexity science, using Python to build and explore simple models that produce surprisingly complex behavior. We start with agent-based models: Schelling's model of segregation, and a variation based on Bill Bishop's *The Big Sort*. Then we explore cellular automata with Conway's Game of Life, including still lifes, oscillators, spaceships, Methuselahs, and the glider gun, and see how to implement it efficiently with NumPy and SciPy. Finally, we use NetworkX to analyze the degree distribution of a Facebook social network, look at power laws and the friendship paradox, and compare the data with the Barabási–Albert model. For each part, there is a Jupyter notebook where you can run the code and work on exercises.
 
-The examples in this tutorial are from my book, [*Think Complexity*, 2nd edition](https://greenteapress.com/wp/think-complexity-2e/), and a class I taught at Olin College.
+The examples in this tutorial are from my book, [*Think Complexity*, 2nd edition](https://allendowney.github.io/ThinkComplexity2/), and a class I taught at Olin College.
 
 This is one of [my workshops and tutorials](https://allendowney.github.io/#workshops).
 
@@ -70,7 +70,7 @@ The Game of Life notebook also mentions two scripts, `LifeRabbits.py` and `LifeP
 
 ## Next steps
 
-To go further, read [*Think Complexity*, 2nd edition](https://greenteapress.com/wp/think-complexity-2e/), which is free online, or see [my other workshops](https://allendowney.github.io/#workshops).
+To go further, read [*Think Complexity*, 2nd edition](https://allendowney.github.io/ThinkComplexity2/), which is free online, or see [my other workshops](https://allendowney.github.io/#workshops).
 
 ## License
 

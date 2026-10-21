@@ -24,6 +24,7 @@ Edit the solutions in `soln/`; `build.sh <notebooks>` copies them up and runs `r
 
 - `scipy-2019`: the code in the SciPy 2019 video.
 - `pre-refresh-2026`: the state before the 2026 refresh.
+- `2026-refresh`: the refreshed version (Python 3.13, 2026-10-21).
 
 ## Testing
 

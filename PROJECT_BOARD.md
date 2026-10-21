@@ -8,7 +8,7 @@ Numbered tasks for tracking work. Each task has a permanent number; add new task
 
 ## Task 1: Refresh
 
-**Status:** In progress (started 2026-10-21)
+**Status:** DONE (2026-10-21), except Allen's Search Console sitemap submission
 
 **Context:** ComplexityScience is a **self-study** workshop (GreenTeaPress Task 24): not offered live now, but the notebooks are maintained and run on Colab. Based on *Think Complexity*, 2nd edition. Guide: the "Refresh checklist" (self-study variant) in `~/GreenTeaPress/plans/workshops.md`; BayesMadeSimple and CompStats are worked examples, and BayesianDecisionAnalysis is the self-study precedent. 40 stars. Given at PyCon US 2017 (with Jason Woodard), PyCon US 2018, and SciPy 2019; the most recent recording is [SciPy 2019](https://www.youtube.com/watch?v=ccA6ghSW1Iw).
 
@@ -35,7 +35,7 @@ Numbered tasks for tracking work. Each task has a permanent number; add new task
 
 **3. Colab**
 - [x] "Click here to run this notebook on Colab" cell after the title of all six notebooks; solutions also link to the version with blanks (2026-10-21). `remove_soln.py` points the student version's cell at itself. README table: step 5
-- [ ] Allen runs one notebook on Colab end to end
+- [x] Allen ran `soln/03_workshop` on Colab end to end (2026-10-21)
 
 **4. Text**
 - [x] Typos and docstrings (2026-10-21, solutions, carried into the student versions by `remove_soln.py`): `01` missing closing quote after "Models of Segregation", "a visualization the grid", "Choose and unhappy agent", `grip:` → `grid:` (2 docstrings); `02` "Here's are", "blinkers, blocks, and beehives,", "natually", "Methuselas" (heading), "initial conditional run", "implementaion", "look up table"; `03` "intereted", "Facecook", "they is evidence", "random seen". Helper scripts: see Content issues 1–3. codespell's other hits are base64 image data or "still lifes" (the Life term)
@@ -56,7 +56,7 @@ Numbered tasks for tracking work. Each task has a permanent number; add new task
 - [x] Repo description (Allen approved) and topics `agent-based-modeling`, `game-of-life`, `networkx` set with `gh` (Allen chose not to add `jupyter-book`); `scripts/repo_about.sh` entry updated (GreenTeaPress, uncommitted)
 
 **7. Close**
-- [ ] Tag `2026-refresh`; note in GreenTeaPress Task 24
+- [x] Tag `2026-refresh` (2026-10-21); note in GreenTeaPress Task 24
 
 ### Inventory (2026-10-21)
 

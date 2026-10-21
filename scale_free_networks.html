@@ -1,0 +1,1217 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta content="Scale-free networks in Python: the degree distribution of a Facebook network, the friendship paradox, power laws, and the Barabási–Albert model." name="description" />
+<meta property="og:title" content="Scale-Free Networks" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://allendowney.github.io/ComplexityScience/scale_free_networks.html" />
+<meta property="og:site_name" content="Complexity Science" />
+<meta property="og:description" content="Scale-free networks in Python: the degree distribution of a Facebook network, the friendship paradox, power laws, and the Barabási–Albert model." />
+<meta property="og:image" content="https://greenteapress.com/wp/wp-content/uploads/2018/09/think_complexity_2e.jpg" />
+<meta property="og:image:alt" content="Cover of Think Complexity by Allen B. Downey, the book the examples come from" />
+
+    <title>Scale-Free Networks &#8212; Complexity Science</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'scale_free_networks';</script>
+    <link rel="canonical" href="https://allendowney.github.io/ComplexityScience/scale_free_networks.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Game of Life" href="game_of_life.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Complexity Science</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    Complexity Science: A Tutorial in Python
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="segregation.html">Agent Based Models of Segregation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="game_of_life.html">Game of Life</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Scale-Free Networks</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/AllenDowney/ComplexityScience" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/scale_free_networks.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Scale-Free Networks</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#graphs">Graphs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#facebook-data">Facebook data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#power-law-distributions">Power law distributions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#barabasi-and-albert">Barabási and Albert</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cumulative-distributions">Cumulative distributions</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="scale-free-networks">
+<h1>Scale-Free Networks<a class="headerlink" href="#scale-free-networks" title="Link to this heading">#</a></h1>
+<p>Examples and exercises for the tutorial <a class="reference external" href="https://allendowney.github.io/ComplexityScience/">Complexity Science</a>, based on <a class="reference external" href="https://thinkcomplex.com"><em>Think Complexity</em>, 2nd edition</a>.</p>
+<p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ComplexityScience/blob/master/soln/03_workshop.ipynb">Click here to run this notebook on Colab</a>. For the exercises, use <a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ComplexityScience/blob/master/03_workshop.ipynb">the version with blanks</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install empiricaldist if needed (Colab doesn't have it)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">empiricaldist</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="o">%</span><span class="k">pip</span> install -q empiricaldist
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">networkx</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nx</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">legacy</span><span class="o">=</span><span class="s1">'1.25'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">empiricaldist</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pmf</span><span class="p">,</span> <span class="n">Cdf</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">decorate</span><span class="p">(</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="o">**</span><span class="n">options</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="graphs">
+<h2>Graphs<a class="headerlink" href="#graphs" title="Link to this heading">#</a></h2>
+<p>To represent social networks, we’ll use <code class="docutils literal notranslate"><span class="pre">nx.Graph</span></code>, the graph representation provided by NetworkX.</p>
+<p>Each person is represented by a node.  Each friendship is represented by an edge between two nodes.</p>
+<p>Here’s a simple example with 4 people:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">nx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/c78a1dbebe8d75e1ecfe658abff430c54dcc2b86bd9f541f0d0d249f30e7218d.png" src="_images/c78a1dbebe8d75e1ecfe658abff430c54dcc2b86bd9f541f0d0d249f30e7218d.png" />
+</div>
+</div>
+<p>The number of friends a person has is the number of edges that connect to their node, which is the “degree” of the node.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">G</span><span class="o">.</span><span class="n">degree</span><span class="p">(</span><span class="n">node</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1 1
+0 3
+2 1
+3 1
+</pre></div>
+</div>
+</div>
+</div>
+<p>We are often interested in the “degree distribution” of a graph, which is the number of people who have 0 friends, the number who have 1 friend, and so on.</p>
+<p>The following function extracts a list of degrees, one for each node in a graph.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">degrees</span><span class="p">(</span><span class="n">G</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""List of degrees for nodes in `G`.</span>
+<span class="sd">    </span>
+<span class="sd">    G: Graph object</span>
+<span class="sd">    </span>
+<span class="sd">    returns: list of int</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">G</span><span class="o">.</span><span class="n">degree</span><span class="p">(</span><span class="n">node</span><span class="p">)</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">G</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s the result for the small example.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">degrees</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1, 3, 1, 1]
+</pre></div>
+</div>
+</div>
+</div>
+<p>I’ll use <code class="docutils literal notranslate"><span class="pre">Pmf</span></code> from <code class="docutils literal notranslate"><span class="pre">empiricaldist</span></code> to make a probability mass function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pmf</span> <span class="o">=</span> <span class="n">Pmf</span><span class="o">.</span><span class="n">from_seq</span><span class="p">(</span><span class="n">degrees</span><span class="p">(</span><span class="n">G</span><span class="p">))</span>
+<span class="n">pmf</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>probs</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>0.75</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.25</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>And <code class="docutils literal notranslate"><span class="pre">bar</span></code> to display it as a bar plot.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pmf</span><span class="o">.</span><span class="n">bar</span><span class="p">()</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">'Degree'</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">'PMF'</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">3.6</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/8b5f052af053d40933800bd0caf5e50c66aa19ec804a58b79e7ed7b7a7186e92.png" src="_images/8b5f052af053d40933800bd0caf5e50c66aa19ec804a58b79e7ed7b7a7186e92.png" />
+</div>
+</div>
+<p><strong>Exercise:</strong> Add another node or nodes to the graph above, and add a few edges.  Plot the new degree distribution.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">nx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/50498c42ef287df0898e30658cefbc2b9cd0bede188b97841e83a413daa95cb7.png" src="_images/50498c42ef287df0898e30658cefbc2b9cd0bede188b97841e83a413daa95cb7.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="n">pmf</span> <span class="o">=</span> <span class="n">Pmf</span><span class="o">.</span><span class="n">from_seq</span><span class="p">(</span><span class="n">degrees</span><span class="p">(</span><span class="n">G</span><span class="p">))</span>
+<span class="n">pmf</span><span class="o">.</span><span class="n">bar</span><span class="p">()</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">'Degree'</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">'PMF'</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">3.6</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/3353dd7d28f9238e13a0f27001ad55cb736da78da26e4adab3d100ac89e06f19.png" src="_images/3353dd7d28f9238e13a0f27001ad55cb736da78da26e4adab3d100ac89e06f19.png" />
+</div>
+</div>
+</section>
+<section id="facebook-data">
+<h2>Facebook data<a class="headerlink" href="#facebook-data" title="Link to this heading">#</a></h2>
+<p>The following function reads a file with one edge per line, specified by two integer node IDs.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">read_graph</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Read a graph from a file.</span>
+<span class="sd">    </span>
+<span class="sd">    filename: string</span>
+<span class="sd">    </span>
+<span class="sd">    return: Graph</span>
+<span class="sd">    """</span>
+    <span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
+    <span class="n">array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">G</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We’ll read the Facebook data downloaded from <a class="reference external" href="https://snap.stanford.edu/data/egonets-Facebook.html">SNAP</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">os.path</span><span class="w"> </span><span class="kn">import</span> <span class="n">basename</span><span class="p">,</span> <span class="n">exists</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">download</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">basename</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">urllib.request</span><span class="w"> </span><span class="kn">import</span> <span class="n">urlretrieve</span>
+        <span class="n">local</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">'Downloaded '</span> <span class="o">+</span> <span class="n">local</span><span class="p">)</span>
+        
+<span class="n">download</span><span class="p">(</span><span class="s1">'https://github.com/AllenDowney/ComplexityScience/raw/master/facebook_combined.txt.gz'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloaded facebook_combined.txt.gz
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># https://snap.stanford.edu/data/facebook_combined.txt.gz</span>
+
+<span class="n">fb</span> <span class="o">=</span> <span class="n">read_graph</span><span class="p">(</span><span class="s1">'facebook_combined.txt.gz'</span><span class="p">)</span>
+<span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">fb</span><span class="p">)</span>
+<span class="n">m</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">fb</span><span class="o">.</span><span class="n">edges</span><span class="p">())</span>
+<span class="n">n</span><span class="p">,</span> <span class="n">m</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(4039, 88234)
+</pre></div>
+</div>
+</div>
+</div>
+<p>To see how popular “you” are, on average, we’ll draw a random sample of 1000 people.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">fb</span><span class="o">.</span><span class="n">nodes</span><span class="p">(),</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>For each “you” in the sample, we’ll look up the number of friends.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_friends</span> <span class="o">=</span> <span class="p">[</span><span class="n">fb</span><span class="o">.</span><span class="n">degree</span><span class="p">(</span><span class="n">node</span><span class="p">)</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">sample</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To plot the degree distribution, I’ll use <code class="docutils literal notranslate"><span class="pre">Pmf</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Pmf</span><span class="o">.</span><span class="n">from_seq</span><span class="p">(</span><span class="n">sample_friends</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">'Number of friends'</span><span class="p">,</span> 
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">'PMF'</span><span class="p">,</span>
+         <span class="n">title</span><span class="o">=</span><span class="s1">'Degree PMF, friends'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/ca0d08c2bbdb48d4be178178886f268d2e2b76af79aa54530bd18e237c5d18e1.png" src="_images/ca0d08c2bbdb48d4be178178886f268d2e2b76af79aa54530bd18e237c5d18e1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Cdf</span><span class="o">.</span><span class="n">from_seq</span><span class="p">(</span><span class="n">sample_friends</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">'C0'</span><span class="p">)</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">'Number of friends'</span><span class="p">,</span> 
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">'CDF'</span><span class="p">,</span>
+         <span class="n">title</span><span class="o">=</span><span class="s1">'Degree CDF, friends'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/89ff830207ce41e89040342d0e45e97f314104588855cb7f9d9c91de2efcf5ef.png" src="_images/89ff830207ce41e89040342d0e45e97f314104588855cb7f9d9c91de2efcf5ef.png" />
+</div>
+</div>
+<p>Now what if, instead of “you”, we choose one of your friends, and look up the number of friends your friend has.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_fof</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">sample</span><span class="p">:</span>
+    <span class="n">friends</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">fb</span><span class="o">.</span><span class="n">neighbors</span><span class="p">(</span><span class="n">node</span><span class="p">))</span>
+    <span class="n">friend</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">friends</span><span class="p">)</span>
+    <span class="n">sample_fof</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fb</span><span class="o">.</span><span class="n">degree</span><span class="p">(</span><span class="n">friend</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s the degree distribution for your friend’s friends:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Pmf</span><span class="o">.</span><span class="n">from_seq</span><span class="p">(</span><span class="n">sample_fof</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">'Number of friends'</span><span class="p">,</span> 
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">'PMF'</span><span class="p">,</span>
+         <span class="n">title</span><span class="o">=</span><span class="s1">'Degree PMF, friends of friends'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/5d796126b622ae7199e5fc72a9cf6d8d13070f1e73321842ac64857a512834fb.png" src="_images/5d796126b622ae7199e5fc72a9cf6d8d13070f1e73321842ac64857a512834fb.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Cdf</span><span class="o">.</span><span class="n">from_seq</span><span class="p">(</span><span class="n">sample_fof</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">'C1'</span><span class="p">)</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">'Number of friends'</span><span class="p">,</span> 
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">'CDF'</span><span class="p">,</span>
+         <span class="n">title</span><span class="o">=</span><span class="s1">'Degree CDF, friends of friends'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/e55a40550f402c0f1372f35af4788f7398242ac3bcc7fd840d7aa0657921dada.png" src="_images/e55a40550f402c0f1372f35af4788f7398242ac3bcc7fd840d7aa0657921dada.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Cdf</span><span class="o">.</span><span class="n">from_seq</span><span class="p">(</span><span class="n">sample_friends</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">'C0'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'friends'</span><span class="p">)</span>
+<span class="n">Cdf</span><span class="o">.</span><span class="n">from_seq</span><span class="p">(</span><span class="n">sample_fof</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">'C1'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'friends of friends'</span><span class="p">)</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">'Number of friends'</span><span class="p">,</span> 
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">'CDF'</span><span class="p">,</span>
+         <span class="n">title</span><span class="o">=</span><span class="s1">'Degree distributions'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/686c870d59988c7bc3e6a29e3ea72de6e045b2abed6682227d12cd63733e6d60.png" src="_images/686c870d59988c7bc3e6a29e3ea72de6e045b2abed6682227d12cd63733e6d60.png" />
+</div>
+</div>
+<p>The bulk of the distribution is wider, and the tail is thicker.  This difference is reflected in the means:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">sample_friends</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">sample_fof</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(43.093, 108.68)
+</pre></div>
+</div>
+</div>
+</div>
+<p>And we can estimate the probability that your friend has more friends than you.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="n">friend</span> <span class="o">&gt;</span> <span class="n">you</span> <span class="k">for</span> <span class="n">you</span><span class="p">,</span> <span class="n">friend</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">sample_friends</span><span class="p">,</span> <span class="n">sample_fof</span><span class="p">)])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.656
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="power-law-distributions">
+<h2>Power law distributions<a class="headerlink" href="#power-law-distributions" title="Link to this heading">#</a></h2>
+<p>As we’ll see below, the degree distribution in the Facebook data looks, in some ways, like a power law distribution.  To see what that means, we’ll look at the Zipf distribution, which has a power law tail.</p>
+<p>Here’s a sample from a Zipf distribution.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">zipf_sample</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">zipf</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s what the PMF looks like.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pmf</span> <span class="o">=</span> <span class="n">Pmf</span><span class="o">.</span><span class="n">from_seq</span><span class="p">(</span><span class="n">zipf_sample</span><span class="p">)</span>
+<span class="n">pmf</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">'Zipf sample'</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">'PMF'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/dacd4637fe75d02c14497e79092e09e70d8ddd89e1ab1b8cfd6d4a89cda649e9.png" src="_images/dacd4637fe75d02c14497e79092e09e70d8ddd89e1ab1b8cfd6d4a89cda649e9.png" />
+</div>
+</div>
+<p>Here it is on a log-x scale.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pmf</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">'Zipf sample (log)'</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">'PMF'</span><span class="p">,</span> <span class="n">xscale</span><span class="o">=</span><span class="s1">'log'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/a99157e99a1df0e31f5d71ec29cc2107185dd0e24233f3a6b0b0b280477c14e2.png" src="_images/a99157e99a1df0e31f5d71ec29cc2107185dd0e24233f3a6b0b0b280477c14e2.png" />
+</div>
+</div>
+<p>And on a log-log scale.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pmf</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">'Zipf sample (log)'</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">'PMF (log)'</span><span class="p">,</span> 
+                 <span class="n">xscale</span><span class="o">=</span><span class="s1">'log'</span><span class="p">,</span> <span class="n">yscale</span><span class="o">=</span><span class="s1">'log'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/62fc9fbf4589f259381a55294912477f4374d5a7312d8b889f32fabe8faa741a.png" src="_images/62fc9fbf4589f259381a55294912477f4374d5a7312d8b889f32fabe8faa741a.png" />
+</div>
+</div>
+<p>On a log-log scale, the PMF of the Zipf distribution looks like a straight line (until you get to the extreme tail, which is discrete and noisy).</p>
+<p>For comparison, let’s look at the Poisson distribution, which does not have a power law tail.  I’ll choose the Poisson distribution with the same mean as the sample from the Zipf distribution.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="n">zipf_sample</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">zipf_sample</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+<span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(6.2564, 84.15716641522575)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">poisson_sample</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">poisson</span><span class="p">(</span><span class="n">lam</span><span class="o">=</span><span class="n">mu</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+<span class="n">poisson_sample</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">poisson_sample</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(6.2276, 2.510378106979106)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s the PMF on a log-log scale.  It is definitely not a straight line.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">poisson_pmf</span> <span class="o">=</span> <span class="n">Pmf</span><span class="o">.</span><span class="n">from_seq</span><span class="p">(</span><span class="n">poisson_sample</span><span class="p">)</span>
+<span class="n">poisson_pmf</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">'Poisson sample (log)'</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">'PMF (log)'</span><span class="p">,</span> 
+                 <span class="n">xscale</span><span class="o">=</span><span class="s1">'log'</span><span class="p">,</span> <span class="n">yscale</span><span class="o">=</span><span class="s1">'log'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/466b2887cda41b1e8abb29673c514c3ea0cdc0ea2a235409f5532eaeb59c6d15.png" src="_images/466b2887cda41b1e8abb29673c514c3ea0cdc0ea2a235409f5532eaeb59c6d15.png" />
+</div>
+</div>
+<p>So this gives us a simple way to test for power laws.  If you plot the PMF on a log-log scale, and the result is a straight line, that is evidence of power law behavior.</p>
+<p>This test is not entirely reliable; there are better options.  But it’s good enough for an initial exploration.</p>
+</section>
+<section id="barabasi-and-albert">
+<h2>Barabási and Albert<a class="headerlink" href="#barabasi-and-albert" title="Link to this heading">#</a></h2>
+<p>Let’s see what the degree distribution for the Facebook data looks like on a log-log scale.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pmf_fb</span> <span class="o">=</span> <span class="n">Pmf</span><span class="o">.</span><span class="n">from_seq</span><span class="p">(</span><span class="n">degrees</span><span class="p">(</span><span class="n">fb</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pmf_fb</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">'Facebook'</span><span class="p">)</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xscale</span><span class="o">=</span><span class="s1">'log'</span><span class="p">,</span> 
+         <span class="n">yscale</span><span class="o">=</span><span class="s1">'log'</span><span class="p">,</span>
+         <span class="n">xlabel</span><span class="o">=</span><span class="s1">'Degree (log)'</span><span class="p">,</span> 
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">'PMF (log)'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/7dc91497553cfa499488679bf10210d4bb8d5ae338ecc0b99a35ba928eab2c46.png" src="_images/7dc91497553cfa499488679bf10210d4bb8d5ae338ecc0b99a35ba928eab2c46.png" />
+</div>
+</div>
+<p>For degrees greater than 10, it resembles the Zipf sample (and doesn’t look much like the Poisson sample).</p>
+<p>We can estimate the parameter of the Zipf distribution by eyeballing the slope of the tail.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1000</span><span class="p">],</span> <span class="p">[</span><span class="mf">5e-2</span><span class="p">,</span> <span class="mf">2e-4</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">'gray'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">'dashed'</span><span class="p">)</span>
+
+<span class="n">pmf_fb</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">'Facebook'</span><span class="p">)</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xscale</span><span class="o">=</span><span class="s1">'log'</span><span class="p">,</span> 
+         <span class="n">yscale</span><span class="o">=</span><span class="s1">'log'</span><span class="p">,</span>
+         <span class="n">xlabel</span><span class="o">=</span><span class="s1">'Degree (log)'</span><span class="p">,</span> 
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">'PMF (log)'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/ef5fc296de8e67ef536f4296d24eb0a75a34410799c321f1733ccb6925ca8d17.png" src="_images/ef5fc296de8e67ef536f4296d24eb0a75a34410799c321f1733ccb6925ca8d17.png" />
+</div>
+</div>
+<p>Here’s a simplified version of the NetworkX function that generates BA graphs.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># modified version of the NetworkX implementation from</span>
+<span class="c1"># https://github.com/networkx/networkx/blob/main/networkx/generators/random_graphs.py</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">barabasi_albert_graph</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Constructs a BA graph.</span>
+<span class="sd">    </span>
+<span class="sd">    n: number of nodes</span>
+<span class="sd">    k: number of edges for each new node</span>
+<span class="sd">    seed: random seed</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">seed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    
+    <span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">empty_graph</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+    <span class="n">targets</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">))</span>
+    <span class="n">repeated_nodes</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">source</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+
+        <span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">(</span><span class="nb">zip</span><span class="p">([</span><span class="n">source</span><span class="p">]</span><span class="o">*</span><span class="n">k</span><span class="p">,</span> <span class="n">targets</span><span class="p">))</span>
+
+        <span class="n">repeated_nodes</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span>
+        <span class="n">repeated_nodes</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">source</span><span class="p">]</span> <span class="o">*</span> <span class="n">k</span><span class="p">)</span>
+
+        <span class="n">targets</span> <span class="o">=</span> <span class="n">_random_subset</span><span class="p">(</span><span class="n">repeated_nodes</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">G</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And here’s the function that generates a random subset without repetition.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">_random_subset</span><span class="p">(</span><span class="n">repeated_nodes</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Select a random subset of nodes without repeating.</span>
+<span class="sd">    </span>
+<span class="sd">    repeated_nodes: list of nodes</span>
+<span class="sd">    k: size of set</span>
+<span class="sd">    </span>
+<span class="sd">    returns: set of nodes</span>
+<span class="sd">    """</span>
+    <span class="n">targets</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">k</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">repeated_nodes</span><span class="p">)</span>
+        <span class="n">targets</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">targets</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>I’ll generate a BA graph with the same number of nodes and edges as the Facebook data:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">fb</span><span class="p">)</span>
+<span class="n">m</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">fb</span><span class="o">.</span><span class="n">edges</span><span class="p">())</span>
+<span class="n">k</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">m</span><span class="o">/</span><span class="n">n</span><span class="p">))</span>
+<span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">k</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(4039, 88234, 22)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Providing a random seed means we’ll get the same graph every time.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ba</span> <span class="o">=</span> <span class="n">barabasi_albert_graph</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The number of edges is pretty close to what we asked for.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">ba</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">ba</span><span class="o">.</span><span class="n">edges</span><span class="p">()),</span> <span class="nb">len</span><span class="p">(</span><span class="n">ba</span><span class="o">.</span><span class="n">edges</span><span class="p">())</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">ba</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(4039, 88374, 21.88016835850458)
+</pre></div>
+</div>
+</div>
+</div>
+<p>So the mean degree is about right.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">degrees</span><span class="p">(</span><span class="n">fb</span><span class="p">)),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">degrees</span><span class="p">(</span><span class="n">ba</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(43.69101262688784, 43.76033671700916)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The standard deviation of degree is pretty close; maybe a little low.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">degrees</span><span class="p">(</span><span class="n">fb</span><span class="p">)),</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">degrees</span><span class="p">(</span><span class="n">ba</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(52.41411556737521, 41.03760075705614)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s take a look at the degree distribution.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pmf_ba</span> <span class="o">=</span> <span class="n">Pmf</span><span class="o">.</span><span class="n">from_seq</span><span class="p">(</span><span class="n">degrees</span><span class="p">(</span><span class="n">ba</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Looking at the PMFs on a linear scale, we see one difference, which is that the BA model has no nodes with degree less than <code class="docutils literal notranslate"><span class="pre">k</span></code>, which is 22.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">pmf_fb</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">'Facebook'</span><span class="p">)</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">'Degree'</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">'PMF'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="n">pmf_ba</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">'BA model'</span><span class="p">)</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">'Degree'</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">'PMF'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/64aa49d3bc6d5bd0b70bdfd6ec48a0cabd5900a625e8d5956de365cde9e2b1e3.png" src="_images/64aa49d3bc6d5bd0b70bdfd6ec48a0cabd5900a625e8d5956de365cde9e2b1e3.png" />
+</div>
+</div>
+<p>If we look at the PMF on a log-log scale, the BA model looks pretty good for values bigger than about 20.  And it seems to follow a power law.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">pmf_fb</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">'Facebook'</span><span class="p">)</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">'Degree'</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">'PMF'</span><span class="p">,</span>
+         <span class="n">xscale</span><span class="o">=</span><span class="s1">'log'</span><span class="p">,</span> <span class="n">yscale</span><span class="o">=</span><span class="s1">'log'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="n">pmf_ba</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">'BA model'</span><span class="p">)</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">'Degree'</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">'PMF'</span><span class="p">,</span>
+         <span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1e4</span><span class="p">],</span>
+         <span class="n">xscale</span><span class="o">=</span><span class="s1">'log'</span><span class="p">,</span> <span class="n">yscale</span><span class="o">=</span><span class="s1">'log'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/a4afa901794fc14f87022550b7f12b59c5bf68e83ae56e720991de933e83d252.png" src="_images/a4afa901794fc14f87022550b7f12b59c5bf68e83ae56e720991de933e83d252.png" />
+</div>
+</div>
+</section>
+<section id="cumulative-distributions">
+<h2>Cumulative distributions<a class="headerlink" href="#cumulative-distributions" title="Link to this heading">#</a></h2>
+<p>Here are the degree CDFs for the Facebook data and the BA model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cdf_fb</span> <span class="o">=</span> <span class="n">Cdf</span><span class="o">.</span><span class="n">from_seq</span><span class="p">(</span><span class="n">degrees</span><span class="p">(</span><span class="n">fb</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cdf_ba</span> <span class="o">=</span> <span class="n">Cdf</span><span class="o">.</span><span class="n">from_seq</span><span class="p">(</span><span class="n">degrees</span><span class="p">(</span><span class="n">ba</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>If we plot them on a log-x scale, we get a sense of how well the model fits the central part of the distribution.</p>
+<p>The BA model is ok for values above the median, but not very good for smaller values.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cdf_fb</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">'Facebook'</span><span class="p">)</span>
+<span class="n">cdf_ba</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">'gray'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'BA model'</span><span class="p">)</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">'Degree'</span><span class="p">,</span> <span class="n">xscale</span><span class="o">=</span><span class="s1">'log'</span><span class="p">,</span>
+                 <span class="n">ylabel</span><span class="o">=</span><span class="s1">'CDF'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/c89815876b50abcb1d5924a56d060e68dc7bffc9da8b487e73452c409e6e4013.png" src="_images/c89815876b50abcb1d5924a56d060e68dc7bffc9da8b487e73452c409e6e4013.png" />
+</div>
+</div>
+<p>If we plot the complementary CDF on a log-log scale, we see that the BA model fits the tail of the distribution reasonably well.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">complementary_cdf_fb</span> <span class="o">=</span> <span class="mi">1</span><span class="o">-</span><span class="n">cdf_fb</span>
+<span class="n">complementary_cdf_ba</span> <span class="o">=</span> <span class="mi">1</span><span class="o">-</span><span class="n">cdf_ba</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">complementary_cdf_fb</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">'Facebook'</span><span class="p">)</span>
+<span class="n">complementary_cdf_ba</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">'gray'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'BA model'</span><span class="p">)</span>
+<span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">'Degree'</span><span class="p">,</span> <span class="n">xscale</span><span class="o">=</span><span class="s1">'log'</span><span class="p">,</span>
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">'Complementary CDF'</span><span class="p">,</span> <span class="n">yscale</span><span class="o">=</span><span class="s1">'log'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/92625d7da6fbbbee79cd7ab08218913a57a6dea5b6e05c9f27dcc348bd917e02.png" src="_images/92625d7da6fbbbee79cd7ab08218913a57a6dea5b6e05c9f27dcc348bd917e02.png" />
+</div>
+</div>
+<p>But there is certainly room for a model that does a better job of fitting the whole distribution.</p>
+<p>Copyright 2016–2026 Allen Downey</p>
+<p>Code license: <a class="reference external" href="https://opensource.org/license/MIT">MIT License</a></p>
+<p>Text license: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="game_of_life.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Game of Life</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#graphs">Graphs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#facebook-data">Facebook data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#power-law-distributions">Power law distributions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#barabasi-and-albert">Barabási and Albert</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cumulative-distributions">Cumulative distributions</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Allen B. Downey
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <script>new Image().src="https://greenteapress.com/gh.gif?u="+encodeURIComponent(location.href)+"&r="+encodeURIComponent(document.referrer)</script>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,1371 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta content="Agent-based models in Python: implement Schelling's model of segregation with NumPy and 2-D correlation, then a variation based on The Big Sort." name="description" />
+<meta property="og:title" content="Agent Based Models of Segregation" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://allendowney.github.io/ComplexityScience/segregation.html" />
+<meta property="og:site_name" content="Complexity Science" />
+<meta property="og:description" content="Agent-based models in Python: implement Schelling's model of segregation with NumPy and 2-D correlation, then a variation based on The Big Sort." />
+<meta property="og:image" content="https://greenteapress.com/wp/wp-content/uploads/2018/09/think_complexity_2e.jpg" />
+<meta property="og:image:alt" content="Cover of Think Complexity by Allen B. Downey, the book the examples come from" />
+
+    <title>Agent Based Models of Segregation &#8212; Complexity Science</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'segregation';</script>
+    <link rel="canonical" href="https://allendowney.github.io/ComplexityScience/segregation.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Game of Life" href="game_of_life.html" />
+    <link rel="prev" title="Complexity Science: A Tutorial in Python" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Complexity Science</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    Complexity Science: A Tutorial in Python
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Agent Based Models of Segregation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="game_of_life.html">Game of Life</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scale_free_networks.html">Scale-Free Networks</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/AllenDowney/ComplexityScience" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/segregation.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Agent Based Models of Segregation</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#schelling-s-model">Schelling’s model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementing-the-model">Implementing the model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-step-function">The step function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bigger-grid">Bigger grid</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#animation">Animation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-big-sort">The Big Sort</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Bigger grid</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Animation</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="agent-based-models-of-segregation">
+<h1>Agent Based Models of Segregation<a class="headerlink" href="#agent-based-models-of-segregation" title="Link to this heading">#</a></h1>
+<p>Examples and exercises for the tutorial <a class="reference external" href="https://allendowney.github.io/ComplexityScience/">Complexity Science</a>, based on <a class="reference external" href="https://thinkcomplex.com"><em>Think Complexity</em>, 2nd edition</a>.</p>
+<p><a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ComplexityScience/blob/master/soln/01_workshop.ipynb">Click here to run this notebook on Colab</a>. For the exercises, use <a class="reference external" href="https://colab.research.google.com/github/AllenDowney/ComplexityScience/blob/master/01_workshop.ipynb">the version with blanks</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">legacy</span><span class="o">=</span><span class="s1">'1.25'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">decorate</span><span class="p">(</span><span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="o">**</span><span class="n">options</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="schelling-s-model">
+<h2>Schelling’s model<a class="headerlink" href="#schelling-s-model" title="Link to this heading">#</a></h2>
+<p>In 1969 Thomas Schelling published “<a class="reference external" href="https://thinkcomplex.com/schell">Models of Segregation</a>”,
+which proposed a simple model of racial segregation.</p>
+<p>The Schelling model is a grid where each cell represents a house.  The houses are occupied by two kinds of agents,
+labeled red and blue, in roughly equal numbers.  About 10% of the
+houses are empty.</p>
+<p>At any point in time, an agent might be happy or unhappy, depending
+on the other agents in the neighborhood, where the
+“neighborhood” of each house is the set of eight adjacent cells.</p>
+<p>In one version of the model, agents are happy if they have at least
+three neighbors like themselves, and unhappy if they have fewer than three.</p>
+<p>The simulation proceeds by choosing an agent at random and checking
+to see whether they are happy.  If so, nothing happens; if not,
+the agent chooses one of the unoccupied cells at random and moves.</p>
+<p>You will not be surprised to hear that this model leads to some
+segregation, but you might be surprised by the degree.</p>
+<section id="implementing-the-model">
+<h3>Implementing the model<a class="headerlink" href="#implementing-the-model" title="Link to this heading">#</a></h3>
+<p>We will explore Schelling’s model by implementing it in Python.  The following
+function initializes the grid.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">make_grid</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Make an array with two types of agents.</span>
+<span class="sd">    </span>
+<span class="sd">    n: width and height of the array</span>
+<span class="sd">    </span>
+<span class="sd">    return: NumPy array</span>
+<span class="sd">    """</span>
+    <span class="n">choices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
+    <span class="n">probs</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.45</span><span class="p">,</span> <span class="mf">0.45</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">choices</span><span class="p">,</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span> <span class="n">p</span><span class="o">=</span><span class="n">probs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grid</span> <span class="o">=</span> <span class="n">make_grid</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">grid</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[2, 2, 1, 2, 2, 1, 2, 2, 1, 2],
+       [1, 2, 2, 2, 2, 1, 1, 2, 2, 0],
+       [1, 2, 2, 2, 0, 2, 2, 2, 2, 1],
+       [1, 2, 2, 2, 1, 2, 2, 1, 2, 2],
+       [2, 0, 2, 1, 0, 2, 1, 1, 1, 1],
+       [0, 2, 1, 1, 2, 1, 2, 2, 2, 2],
+       [1, 2, 0, 2, 2, 1, 2, 1, 1, 2],
+       [1, 1, 2, 2, 2, 2, 1, 1, 0, 2],
+       [2, 2, 1, 2, 1, 2, 2, 2, 1, 2],
+       [1, 1, 0, 2, 2, 2, 1, 1, 2, 1]], dtype=int8)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following function plots a visualization of the grid.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.colors</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearSegmentedColormap</span>
+
+<span class="c1"># make a custom color map</span>
+<span class="n">palette</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s1">'muted'</span><span class="p">)</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="s1">'white'</span><span class="p">,</span> <span class="n">palette</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">palette</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">cmap</span> <span class="o">=</span> <span class="n">LinearSegmentedColormap</span><span class="o">.</span><span class="n">from_list</span><span class="p">(</span><span class="s1">'cmap'</span><span class="p">,</span> <span class="n">colors</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">draw</span><span class="p">(</span><span class="n">grid</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Draws the grid.</span>
+<span class="sd">    </span>
+<span class="sd">    grid: NumPy array</span>
+<span class="sd">    """</span>
+    <span class="c1"># Make a copy because some implementations</span>
+    <span class="c1"># of step perform updates in place.</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">n</span><span class="p">,</span> <span class="n">m</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">([])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([])</span>
+
+    <span class="n">options</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">interpolation</span><span class="o">=</span><span class="s1">'none'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+    <span class="n">options</span><span class="p">[</span><span class="s1">'extent'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">cmap</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s what the random initial condition looks like.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">im</span> <span class="o">=</span> <span class="n">draw</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/bded7b98051d4ec8e0926cbee9ba82fb906cee353d954eabf6d605d5f067e1c1.png" src="_images/bded7b98051d4ec8e0926cbee9ba82fb906cee353d954eabf6d605d5f067e1c1.png" />
+</div>
+</div>
+</section>
+<section id="the-step-function">
+<h3>The step function<a class="headerlink" href="#the-step-function" title="Link to this heading">#</a></h3>
+<p>To simulate a time step in Schelling’s model, we have to</p>
+<ol class="arabic simple">
+<li><p>Choose an unhappy agent.</p></li>
+<li><p>Choose a random empty cell.</p></li>
+<li><p>Move the agent.</p></li>
+</ol>
+<p>The next few cells develop the functions we’ll need.  As an exercise, you will assemble them into a <code class="docutils literal notranslate"><span class="pre">step</span></code> function.</p>
+<p>First I’ll compute <code class="docutils literal notranslate"><span class="pre">empty</span></code>, which is a boolean array that is <code class="docutils literal notranslate"><span class="pre">True</span></code> for the empty cells.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">empty</span> <span class="o">=</span> <span class="p">(</span><span class="n">grid</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">empty</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>8
+</pre></div>
+</div>
+</div>
+</div>
+<p>To find the unhappy agents, we have to compute the number of same-color neighbors for each agent.  We’ll do that using 2-D correlation.</p>
+<p>As an example, we can compute the number of empty neighbors for each cell.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.signal</span><span class="w"> </span><span class="kn">import</span> <span class="n">correlate2d</span>
+
+<span class="n">kernel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                   <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                   <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
+
+<span class="n">options</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">'same'</span><span class="p">,</span> <span class="n">boundary</span><span class="o">=</span><span class="s1">'wrap'</span><span class="p">)</span>
+
+<span class="n">correlate2d</span><span class="p">(</span><span class="n">empty</span><span class="p">,</span> <span class="n">kernel</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[1, 1, 1, 1, 0, 0, 0, 0, 1, 1],
+       [1, 0, 0, 1, 1, 1, 0, 0, 1, 0],
+       [1, 0, 0, 1, 0, 1, 0, 0, 1, 1],
+       [1, 1, 1, 2, 2, 2, 0, 0, 0, 0],
+       [2, 1, 1, 1, 0, 1, 0, 0, 0, 1],
+       [1, 3, 2, 2, 1, 1, 0, 0, 0, 1],
+       [1, 2, 0, 1, 0, 0, 0, 1, 1, 2],
+       [0, 1, 1, 1, 0, 0, 0, 1, 0, 1],
+       [0, 1, 1, 1, 0, 0, 0, 1, 1, 1],
+       [0, 1, 0, 1, 0, 0, 0, 0, 0, 0]], dtype=int8)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following function computes the number of same-color neighbors for each agent.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">compute_num_same</span><span class="p">(</span><span class="n">grid</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""For each cell, the number of same-color neighbors.</span>
+<span class="sd">    </span>
+<span class="sd">    grid: NumPy array</span>
+<span class="sd">    </span>
+<span class="sd">    return: new NumPy array</span>
+<span class="sd">    """</span>
+
+    <span class="n">red</span> <span class="o">=</span> <span class="n">grid</span><span class="o">==</span><span class="mi">1</span>
+    <span class="n">blue</span> <span class="o">=</span> <span class="n">grid</span><span class="o">==</span><span class="mi">2</span>
+
+    <span class="c1"># count red neighbors, blue neighbors, and total</span>
+    <span class="n">num_red</span> <span class="o">=</span> <span class="n">correlate2d</span><span class="p">(</span><span class="n">red</span><span class="p">,</span> <span class="n">kernel</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+    <span class="n">num_blue</span> <span class="o">=</span> <span class="n">correlate2d</span><span class="p">(</span><span class="n">blue</span><span class="p">,</span> <span class="n">kernel</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+
+    <span class="n">num_same</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">red</span><span class="p">,</span> <span class="n">num_red</span><span class="p">,</span> <span class="n">num_blue</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">num_same</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s what that looks like for the initial grid.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># for each cell, compute the fraction of neighbors with the same color</span>
+<span class="n">num_same</span> <span class="o">=</span> <span class="n">compute_num_same</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+<span class="n">num_same</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[3, 3, 1, 6, 6, 3, 3, 4, 2, 3],
+       [2, 5, 7, 6, 5, 2, 2, 6, 5, 4],
+       [3, 5, 8, 6, 6, 4, 5, 6, 5, 3],
+       [3, 5, 6, 4, 1, 4, 5, 3, 3, 3],
+       [4, 5, 4, 3, 4, 4, 3, 3, 3, 2],
+       [5, 3, 2, 2, 3, 2, 3, 3, 3, 3],
+       [2, 2, 5, 5, 5, 2, 3, 3, 2, 3],
+       [2, 3, 5, 5, 6, 5, 3, 4, 4, 3],
+       [3, 2, 2, 5, 0, 5, 4, 2, 3, 3],
+       [2, 3, 5, 4, 6, 5, 2, 3, 4, 3]], dtype=int8)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The mean of this array measures the average level of segregation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num_same</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.68
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">locs_where</span></code> is a wrapper on <code class="docutils literal notranslate"><span class="pre">np.nonzero</span></code> that returns a list of pairs, where each pair is the coordinate of an agent that meets a <code class="docutils literal notranslate"><span class="pre">condition</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">locs_where</span><span class="p">(</span><span class="n">condition</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Find cells where a boolean array is True.</span>
+<span class="sd">    </span>
+<span class="sd">    condition: NumPy array</span>
+<span class="sd">    </span>
+<span class="sd">    return: list of coordinate pairs</span>
+<span class="sd">    """</span>
+    <span class="n">ii</span><span class="p">,</span> <span class="n">jj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">condition</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">ii</span><span class="p">,</span> <span class="n">jj</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>An agent is “unhappy” if they have fewer than 3 same-color neighbors.</p>
+<p>Here are the locations of the unhappy agents.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">threshold</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="n">unhappy_locs</span> <span class="o">=</span> <span class="n">locs_where</span><span class="p">(</span><span class="n">num_same</span> <span class="o">&lt;</span> <span class="n">threshold</span><span class="p">)</span>
+<span class="n">unhappy_locs</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(0, 2),
+ (0, 8),
+ (1, 0),
+ (1, 5),
+ (1, 6),
+ (3, 4),
+ (4, 9),
+ (5, 2),
+ (5, 3),
+ (5, 5),
+ (6, 0),
+ (6, 1),
+ (6, 5),
+ (6, 8),
+ (7, 0),
+ (8, 1),
+ (8, 2),
+ (8, 4),
+ (8, 7),
+ (9, 0),
+ (9, 6)]
+</pre></div>
+</div>
+</div>
+</div>
+<p>During each time step, we’ll choose a random unhappy agent.</p>
+<p>The following function chooses a random tuple from a list.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">random_loc</span><span class="p">(</span><span class="n">locs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Choose a random element from a list of tuples.</span>
+<span class="sd">    </span>
+<span class="sd">    locs: list of tuples</span>
+<span class="sd">    </span>
+<span class="sd">    return: tuple</span>
+<span class="sd">    """</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">locs</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">locs</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">source</span></code> is the random unhappy agent who decides to move.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">=</span> <span class="n">random_loc</span><span class="p">(</span><span class="n">unhappy_locs</span><span class="p">)</span>
+<span class="n">source</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1, 6)
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">dest</span></code> is the random empty cell they choose to move to.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">empty_locs</span> <span class="o">=</span> <span class="n">locs_where</span><span class="p">(</span><span class="n">empty</span><span class="p">)</span>
+<span class="n">dest</span> <span class="o">=</span> <span class="n">random_loc</span><span class="p">(</span><span class="n">empty_locs</span><span class="p">)</span>
+<span class="n">dest</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(4, 1)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following function swaps <code class="docutils literal notranslate"><span class="pre">source</span></code> and <code class="docutils literal notranslate"><span class="pre">dest</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">move</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">dest</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Swap the agents at source and dest.</span>
+<span class="sd">    </span>
+<span class="sd">    grid: NumPy array</span>
+<span class="sd">    source: location tuple</span>
+<span class="sd">    dest: location tuple</span>
+<span class="sd">    """</span>
+    <span class="n">grid</span><span class="p">[</span><span class="n">dest</span><span class="p">],</span> <span class="n">grid</span><span class="p">[</span><span class="n">source</span><span class="p">]</span> <span class="o">=</span> <span class="n">grid</span><span class="p">[</span><span class="n">source</span><span class="p">],</span> <span class="n">grid</span><span class="p">[</span><span class="n">dest</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">move</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">dest</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Exercise:</strong> Pull the code from the previous cells into a function that chooses an unhappy agent and moves them to a random empty cell.  It should compute and return the mean of <code class="docutils literal notranslate"><span class="pre">num_same</span></code>.</p>
+<p>Note: If there are no unhappy cells, <code class="docutils literal notranslate"><span class="pre">step</span></code> should do nothing.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Simulate one time step.</span>
+<span class="sd">    </span>
+<span class="sd">    grid: NumPy array</span>
+<span class="sd">    threshold: number of same-color neighbors needed to be happy</span>
+
+<span class="sd">    return: average number of same-color neighbors</span>
+<span class="sd">    """</span>
+    <span class="n">num_same</span> <span class="o">=</span> <span class="n">compute_num_same</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+
+    <span class="c1"># FILL THIS IN!</span>
+    
+    <span class="k">return</span> <span class="n">num_same</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Simulate one time step.</span>
+<span class="sd">    </span>
+<span class="sd">    grid: NumPy array</span>
+<span class="sd">    threshold: number of same-color neighbors needed to be happy</span>
+
+<span class="sd">    return: average number of same-color neighbors</span>
+<span class="sd">    """</span>
+    <span class="n">num_same</span> <span class="o">=</span> <span class="n">compute_num_same</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+    <span class="n">unhappy_locs</span> <span class="o">=</span> <span class="n">locs_where</span><span class="p">(</span><span class="n">num_same</span> <span class="o">&lt;</span> <span class="n">threshold</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">unhappy_locs</span><span class="p">):</span>
+        <span class="n">source</span> <span class="o">=</span> <span class="n">random_loc</span><span class="p">(</span><span class="n">unhappy_locs</span><span class="p">)</span>
+        <span class="n">empty_locs</span> <span class="o">=</span> <span class="n">locs_where</span><span class="p">(</span><span class="n">grid</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">dest</span> <span class="o">=</span> <span class="n">random_loc</span><span class="p">(</span><span class="n">empty_locs</span><span class="p">)</span>
+        <span class="n">move</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">dest</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">num_same</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Test your step function here.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">step</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.69
+</pre></div>
+</div>
+</div>
+</div>
+<p>Then run the following cells to see how segregation changes over time.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">decorate_seg</span><span class="p">():</span>
+    <span class="n">decorate</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">'Number of steps'</span><span class="p">,</span>
+             <span class="n">ylabel</span><span class="o">=</span><span class="s1">'Average number of same-color neighbors'</span><span class="p">,</span>
+             <span class="n">title</span><span class="o">=</span><span class="s1">'Schelling model'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grid</span> <span class="o">=</span> <span class="n">make_grid</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">segs</span> <span class="o">=</span> <span class="p">[</span><span class="n">step</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">200</span><span class="p">)]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">segs</span><span class="p">)</span>
+<span class="n">decorate_seg</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/822d9479881ae5d3d923173068090f3670dd090c41a87003f518c493e4456650.png" src="_images/822d9479881ae5d3d923173068090f3670dd090c41a87003f518c493e4456650.png" />
+</div>
+</div>
+<p><strong>Exercise:</strong> Experiment with different values of <code class="docutils literal notranslate"><span class="pre">threshold</span></code> and see what effect they have on the result.</p>
+</section>
+<section id="bigger-grid">
+<h3>Bigger grid<a class="headerlink" href="#bigger-grid" title="Link to this heading">#</a></h3>
+<p>Let’s see how that looks on a bigger grid.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grid</span> <span class="o">=</span> <span class="n">make_grid</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">im</span> <span class="o">=</span> <span class="n">draw</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/efd5466ace61adf0b3ececd8106173a5daa4a61ef8d459ce4054fade16f2c427.png" src="_images/efd5466ace61adf0b3ececd8106173a5daa4a61ef8d459ce4054fade16f2c427.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">segs</span> <span class="o">=</span> <span class="p">[</span><span class="n">step</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3000</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">segs</span><span class="p">)</span>
+<span class="n">decorate_seg</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/af0f8523521ea75db673f406d8a15f51f98d4cc167182425fc1de426872cdc1a.png" src="_images/af0f8523521ea75db673f406d8a15f51f98d4cc167182425fc1de426872cdc1a.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">im</span> <span class="o">=</span> <span class="n">draw</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/7d8e355d86df4f45eb351b7e4efc7d39580a7e858bf7485699bf910e607b8ed1.png" src="_images/7d8e355d86df4f45eb351b7e4efc7d39580a7e858bf7485699bf910e607b8ed1.png" />
+</div>
+</div>
+<p>The following figure shows three steps in the evolution of the grid.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">17</span><span class="p">)</span>
+
+<span class="n">grid</span> <span class="o">=</span> <span class="n">make_grid</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+
+<span class="c1"># draw the initial grid</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">draw</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+
+<span class="c1"># first update</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
+    <span class="n">step</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+<span class="n">draw</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+
+<span class="c1"># second update</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
+    <span class="n">step</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+<span class="n">draw</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/fcc0d7b173dff70a32dce85b5a610645f96a464e8869e11d9308160b30763571.png" src="_images/fcc0d7b173dff70a32dce85b5a610645f96a464e8869e11d9308160b30763571.png" />
+</div>
+</div>
+<p><strong>Exercise:</strong> One more time, try out different values of <code class="docutils literal notranslate"><span class="pre">threshold</span></code>.  What value yields the biggest difference between <code class="docutils literal notranslate"><span class="pre">threshold</span></code> and the average number of same-color neighbors?</p>
+</section>
+<section id="animation">
+<h3>Animation<a class="headerlink" href="#animation" title="Link to this heading">#</a></h3>
+<p>The following functions animate the evolution of the grid.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">time</span><span class="w"> </span><span class="kn">import</span> <span class="n">sleep</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">clear_output</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">animate</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">frames</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Animate the automaton.</span>
+
+<span class="sd">    grid: NumPy array</span>
+<span class="sd">    frames: number of frames to draw</span>
+<span class="sd">    interval: time between frames in seconds</span>
+<span class="sd">    """</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">frames</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">draw</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">interval</span><span class="p">:</span>
+                <span class="n">sleep</span><span class="p">(</span><span class="n">interval</span><span class="p">)</span>
+            <span class="n">step</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+            <span class="n">clear_output</span><span class="p">(</span><span class="n">wait</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">draw</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grid</span> <span class="o">=</span> <span class="n">make_grid</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="c1"># animate(grid, frames=1000)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Exercise:</strong> Experiment with different starting conditions: for example, more or fewer empty cells, or unequal numbers of red and blue agents.</p>
+</section>
+</section>
+<section id="the-big-sort">
+<h2>The Big Sort<a class="headerlink" href="#the-big-sort" title="Link to this heading">#</a></h2>
+<p>Bill Bishop, author of <em>The Big Sort</em>, argues that
+American society is increasingly segregated by political
+opinion, as people choose to live among like-minded neighbors.</p>
+<p>The mechanism Bishop hypothesizes is not that people, like the agents
+in Schelling’s model, are more likely to move if they are
+isolated, but that when they move for any reason, they are
+likely to choose a neighborhood with people like themselves.</p>
+<p>Let’s write a version of Schelling’s model to simulate
+this kind of behavior and see if it yields similar degrees of
+segregation.</p>
+<p>We’ll start with a random initial grid.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grid</span> <span class="o">=</span> <span class="n">make_grid</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">im</span> <span class="o">=</span> <span class="n">draw</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/ed1cd622797befbde96c793afe69bdca78f5dc127627cd1cd51762e301e17d8a.png" src="_images/ed1cd622797befbde96c793afe69bdca78f5dc127627cd1cd51762e301e17d8a.png" />
+</div>
+</div>
+<p>Write a few lines of code to choose a random occupied location, and call it <code class="docutils literal notranslate"><span class="pre">source</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">empty</span> <span class="o">=</span> <span class="p">(</span><span class="n">grid</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">empty_locs</span> <span class="o">=</span> <span class="n">locs_where</span><span class="p">(</span><span class="n">empty</span><span class="p">)</span>
+<span class="n">empty_locs</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(0, 7), (2, 5), (2, 8), (4, 3), (5, 2), (8, 3), (8, 4), (8, 8)]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">full_locs</span> <span class="o">=</span> <span class="n">locs_where</span><span class="p">(</span><span class="o">~</span><span class="n">empty</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">=</span> <span class="n">random_loc</span><span class="p">(</span><span class="n">full_locs</span><span class="p">)</span>
+<span class="n">source</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(9, 0)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s a list of random empty locations the <code class="docutils literal notranslate"><span class="pre">source</span></code> agent could move to.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num_comps</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">dests</span> <span class="o">=</span> <span class="p">[</span><span class="n">random_loc</span><span class="p">(</span><span class="n">empty_locs</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_comps</span><span class="p">)]</span>
+<span class="n">dests</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(8, 3), (8, 3)]
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following cell computes the number of neighbors in each location that are the same color as <code class="docutils literal notranslate"><span class="pre">source</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">same_color</span> <span class="o">=</span> <span class="p">(</span><span class="n">grid</span><span class="o">==</span><span class="n">grid</span><span class="p">[</span><span class="n">source</span><span class="p">])</span>
+
+<span class="n">num_same</span> <span class="o">=</span> <span class="n">correlate2d</span><span class="p">(</span><span class="n">same_color</span><span class="p">,</span> <span class="n">kernel</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+<span class="n">num_same</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[5, 6, 5, 2, 3, 2, 3, 3, 1, 4],
+       [2, 5, 6, 5, 3, 2, 1, 2, 1, 2],
+       [3, 5, 4, 2, 1, 1, 2, 3, 2, 2],
+       [4, 3, 4, 2, 1, 1, 3, 4, 4, 4],
+       [4, 3, 3, 1, 2, 4, 5, 6, 5, 3],
+       [7, 5, 4, 3, 2, 4, 4, 5, 6, 6],
+       [4, 3, 2, 3, 3, 6, 6, 5, 4, 3],
+       [6, 5, 4, 3, 3, 4, 5, 4, 6, 4],
+       [5, 3, 2, 1, 3, 4, 6, 4, 5, 3],
+       [4, 5, 6, 3, 4, 3, 5, 4, 3, 4]], dtype=int8)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can make a list with one tuple per destination, where the first element in each tuple is the number of same-color neighbors.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">choices</span> <span class="o">=</span> <span class="p">[(</span><span class="n">num_same</span><span class="p">[</span><span class="n">dest</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(),</span> <span class="n">dest</span><span class="p">)</span> <span class="k">for</span> <span class="n">dest</span> <span class="ow">in</span> <span class="n">dests</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">choice</span> <span class="ow">in</span> <span class="n">choices</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">choice</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1, 0.9606424068236474, (8, 3))
+(1, 0.6324782497028868, (8, 3))
+</pre></div>
+</div>
+</div>
+</div>
+<p>Using the <code class="docutils literal notranslate"><span class="pre">max</span></code> function, we get the location with the highest number of same-color neighbors, with ties broken at random.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num</span><span class="p">,</span> <span class="n">rand</span><span class="p">,</span> <span class="n">dest</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">choices</span><span class="p">)</span>
+<span class="n">num</span><span class="p">,</span> <span class="n">rand</span><span class="p">,</span> <span class="n">dest</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1, 0.9606424068236474, (8, 3))
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">move</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">dest</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now pull all of that code into a step function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">num_comps</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Simulate one time step.</span>
+<span class="sd">    </span>
+<span class="sd">    grid: NumPy array</span>
+<span class="sd">    num_comps: number of possible destinations the agent looks at</span>
+<span class="sd">    </span>
+<span class="sd">    return: average number of same-color neighbors</span>
+<span class="sd">    """</span>
+    <span class="c1"># FILL THIS IN</span>
+
+    <span class="k">return</span> <span class="n">compute_num_same</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">num_comps</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Simulate one time step.</span>
+<span class="sd">    </span>
+<span class="sd">    grid: NumPy array</span>
+<span class="sd">    num_comps: number of possible destinations the agent looks at</span>
+<span class="sd">    </span>
+<span class="sd">    return: average number of same-color neighbors</span>
+<span class="sd">    """</span>
+    <span class="n">empty</span> <span class="o">=</span> <span class="p">(</span><span class="n">grid</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">empty_locs</span> <span class="o">=</span> <span class="n">locs_where</span><span class="p">(</span><span class="n">empty</span><span class="p">)</span>
+    <span class="n">full_locs</span> <span class="o">=</span> <span class="n">locs_where</span><span class="p">(</span><span class="o">~</span><span class="n">empty</span><span class="p">)</span>
+
+    <span class="n">source</span> <span class="o">=</span> <span class="n">random_loc</span><span class="p">(</span><span class="n">full_locs</span><span class="p">)</span>
+    <span class="n">same_color</span> <span class="o">=</span> <span class="p">(</span><span class="n">grid</span><span class="o">==</span><span class="n">grid</span><span class="p">[</span><span class="n">source</span><span class="p">])</span>
+
+    <span class="n">num_same</span> <span class="o">=</span> <span class="n">correlate2d</span><span class="p">(</span><span class="n">same_color</span><span class="p">,</span> <span class="n">kernel</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+
+    <span class="n">dests</span> <span class="o">=</span> <span class="p">[</span><span class="n">random_loc</span><span class="p">(</span><span class="n">empty_locs</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_comps</span><span class="p">)]</span>
+    <span class="n">choices</span> <span class="o">=</span> <span class="p">[(</span><span class="n">num_same</span><span class="p">[</span><span class="n">dest</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(),</span> <span class="n">dest</span><span class="p">)</span> <span class="k">for</span> <span class="n">dest</span> <span class="ow">in</span> <span class="n">dests</span><span class="p">]</span>
+
+    <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">dest</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">choices</span><span class="p">)</span>
+
+    <span class="n">move</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">dest</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">compute_num_same</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">step</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.45
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grid</span> <span class="o">=</span> <span class="n">make_grid</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">segs</span> <span class="o">=</span> <span class="p">[</span><span class="n">step</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">200</span><span class="p">)]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">segs</span><span class="p">)</span>
+<span class="n">decorate_seg</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/c5bfc2b1b77818cf48c5aad6e293226d14dddd9964c023cbf0fbdc05ea89343c.png" src="_images/c5bfc2b1b77818cf48c5aad6e293226d14dddd9964c023cbf0fbdc05ea89343c.png" />
+</div>
+</div>
+<p><strong>Exercise:</strong> Experiment with different values of <code class="docutils literal notranslate"><span class="pre">num_comps</span></code> and see what effect they have on the result.</p>
+<section id="id1">
+<h3>Bigger grid<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p>Let’s see how that looks on a bigger grid.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grid</span> <span class="o">=</span> <span class="n">make_grid</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">im</span> <span class="o">=</span> <span class="n">draw</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/160bc17dee95077a60f2584816eff1749581a28cfb8903ed33f043b233a64060.png" src="_images/160bc17dee95077a60f2584816eff1749581a28cfb8903ed33f043b233a64060.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">segs</span> <span class="o">=</span> <span class="p">[</span><span class="n">step</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2000</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">segs</span><span class="p">)</span>
+<span class="n">decorate_seg</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/6a673ccf45eb9f48f10189be57293e1a27d82b0b6e4a3fbde91f90bc0e7dc584.png" src="_images/6a673ccf45eb9f48f10189be57293e1a27d82b0b6e4a3fbde91f90bc0e7dc584.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">im</span> <span class="o">=</span> <span class="n">draw</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/a20b5d6b5e7afa4ade989e5fd9898cc1d862a7565a79b9e1e5ba7ced3b36b9bd.png" src="_images/a20b5d6b5e7afa4ade989e5fd9898cc1d862a7565a79b9e1e5ba7ced3b36b9bd.png" />
+</div>
+</div>
+<p>The following figure shows three steps in the evolution of the grid.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">17</span><span class="p">)</span>
+
+<span class="n">grid</span> <span class="o">=</span> <span class="n">make_grid</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+
+<span class="c1"># draw the initial grid</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">draw</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+
+<span class="c1"># first update</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
+    <span class="n">step</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+<span class="n">draw</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+
+<span class="c1"># second update</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
+    <span class="n">step</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+<span class="n">draw</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/ea449c3b016952371778bb31ce73490b436b897caf1ef05f996f1b407a18d9c2.png" src="_images/ea449c3b016952371778bb31ce73490b436b897caf1ef05f996f1b407a18d9c2.png" />
+</div>
+</div>
+<p><strong>Exercise:</strong> One more time, try out different values of <code class="docutils literal notranslate"><span class="pre">num_comps</span></code>.</p>
+</section>
+<section id="id2">
+<h3>Animation<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<p>Let’s see what the animation looks like.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grid</span> <span class="o">=</span> <span class="n">make_grid</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="c1"># animate(grid, frames=1000)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Copyright 2019–2026 Allen Downey</p>
+<p>Code license: <a class="reference external" href="https://opensource.org/license/MIT">MIT License</a></p>
+<p>Text license: <a class="reference external" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a></p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Complexity Science: A Tutorial in Python</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="game_of_life.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Game of Life</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#schelling-s-model">Schelling’s model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementing-the-model">Implementing the model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-step-function">The step function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bigger-grid">Bigger grid</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#animation">Animation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-big-sort">The Big Sort</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Bigger grid</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Animation</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Allen B. Downey
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <script>new Image().src="https://greenteapress.com/gh.gif?u="+encodeURIComponent(location.href)+"&r="+encodeURIComponent(document.referrer)</script>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

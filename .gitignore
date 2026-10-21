@@ -45,3 +45,7 @@ jb/scale_free_networks.ipynb
 jb/*.py
 !jb/prep_notebooks.py
 jb/facebook_combined.txt.gz
+
+# helper scripts and data the solution notebooks download when run in soln/
+soln/*.py
+soln/facebook_combined.txt.gz

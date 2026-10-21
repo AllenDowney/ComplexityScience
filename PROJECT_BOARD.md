@@ -29,8 +29,8 @@ Numbered tasks for tracking work. Each task has a permanent number; add new task
 - [ ] Replace Binder and Anaconda instructions in the README with Colab first, then pip or mamba (step 5)
 
 **2. Tests and CI**
-- [ ] `pytest --nbmake` on the solutions and the versions with blanks (the blanks are `# Solution goes here` comments, so the student versions run: all three pass, 63 s)
-- [ ] `.github/workflows/tests.yml`; watch the first run
+- [x] `pytest --nbmake soln/*.ipynb`: the three solutions pass. The student versions run too (their blanks are `# Solution goes here` comments; all three pass, 63 s), but CI runs only the solutions (Allen, 2026-10-21)
+- [x] `.github/workflows/tests.yml` (push to `master`, PR, monthly, manual; Python 3.13; pip with `requirements-dev.txt`; 20-minute timeout; `actions/checkout@v5`, `actions/setup-python@v6`), 2026-10-21. First run: RUNRESULT
 - [ ] Status badge in the README
 
 **3. Colab**

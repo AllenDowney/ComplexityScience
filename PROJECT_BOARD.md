@@ -30,7 +30,7 @@ Numbered tasks for tracking work. Each task has a permanent number; add new task
 
 **2. Tests and CI**
 - [x] `pytest --nbmake soln/*.ipynb`: the three solutions pass. The student versions run too (their blanks are `# Solution goes here` comments; all three pass, 63 s), but CI runs only the solutions (Allen, 2026-10-21)
-- [x] `.github/workflows/tests.yml` (push to `master`, PR, monthly, manual; Python 3.13; pip with `requirements-dev.txt`; 20-minute timeout; `actions/checkout@v5`, `actions/setup-python@v6`), 2026-10-21. First run: RUNRESULT
+- [x] `.github/workflows/tests.yml` (push to `master`, PR, monthly, manual; Python 3.13; pip with `requirements-dev.txt`; 20-minute timeout; `actions/checkout@v5`, `actions/setup-python@v6`), 2026-10-21. First run passed in 2.5 min (3 passed in 100 s; run 39627213054). Annotation: `ubuntu-latest` moves to Ubuntu 26 from 2026-10-19 (informational)
 - [ ] Status badge in the README
 
 **3. Colab**

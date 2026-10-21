@@ -35,3 +35,13 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+
+# Jupyter Book build, the notebooks copied in by prep_notebooks.py,
+# and the files they download when the build runs them
+jb/_build/
+jb/segregation.ipynb
+jb/game_of_life.ipynb
+jb/scale_free_networks.ipynb
+jb/*.py
+!jb/prep_notebooks.py
+jb/facebook_combined.txt.gz

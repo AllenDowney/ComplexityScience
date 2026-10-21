@@ -1,0 +1,6 @@
+format: jb-book
+root: index
+chapters:
+- file: segregation
+- file: game_of_life
+- file: scale_free_networks

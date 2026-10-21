@@ -16,7 +16,7 @@ Numbered tasks for tracking work. Each task has a permanent number; add new task
 - [x] `git fetch`/pull (1 README commit behind, fast-forwarded); uncommitted edits and untracked files decided (below)
 - [x] `PROJECT_BOARD.md` and `CLAUDE.md` (2026-10-21), with `exclude:` in the root `_config.yml` because Pages serves `master` / with Jekyll
 - [x] Tags (2026-10-21): `scipy-2019` at `8122b92` ("Fixing boundary", 2019-07-09 08:50 Austin time, the tutorial day; Allen chose it over `c45df1b`, 2019-05-23); `pre-refresh-2026` at `e64be01`. PyCon 2017 and 2018 predate the repo (first commit 2019-05-14), so no tags
-- [ ] README: each recording lists its tag (step 5)
+- [x] README: each recording lists its tag (step 5)
 - [x] Inventory (below)
 - [x] Environment: `mamba env create -f environment.yml` (created as `ComplexityScience`, 2026-10-21: Python 3.13.16, NumPy 2.5, SciPy 1.18, Matplotlib 3.11, NetworkX 3.7, Seaborn 0.13, empiricaldist 0.10)
 
@@ -26,12 +26,12 @@ Numbered tasks for tracking work. Each task has a permanent number; add new task
 - [x] Breakage and deprecation warnings: none. All three solutions run with Deprecation/Future/PendingDeprecation/User/Runtime warnings as errors (`01` 12 s, `02` 83 s (animations), `03` 11 s). The helper scripts (`Life.py`, `LifeRabbits.py`, `LifePuffer.py`) run with `-W error` too
 - [x] `np.set_printoptions(legacy='1.25')` in the import cell of all six notebooks; re-ran the three solutions in place (no `np.float64(`/`np.int64(` in outputs). Student versions rebuilt from the solutions with `remove_soln.py`, which now also drops nbconvert's execution-timing metadata and execution counts (a rebuild before the edits reproduced the committed student versions exactly)
 - [x] Data URLs: the four helper scripts and `facebook_combined.txt.gz` on `raw/master`, and the SNAP original, return 200
-- [ ] Replace Binder and Anaconda instructions in the README with Colab first, then pip or mamba (step 5)
+- [x] Replace Binder and Anaconda instructions in the README with Colab first, then pip or mamba (step 5)
 
 **2. Tests and CI**
 - [x] `pytest --nbmake soln/*.ipynb`: the three solutions pass. The student versions run too (their blanks are `# Solution goes here` comments; all three pass, 63 s), but CI runs only the solutions (Allen, 2026-10-21)
 - [x] `.github/workflows/tests.yml` (push to `master`, PR, monthly, manual; Python 3.13; pip with `requirements-dev.txt`; 20-minute timeout; `actions/checkout@v5`, `actions/setup-python@v6`), 2026-10-21. First run passed in 2.5 min (3 passed in 100 s; run 39627213054). Annotation: `ubuntu-latest` moves to Ubuntu 26 from 2026-10-19 (informational)
-- [ ] Status badge in the README
+- [x] Status badge in the README
 
 **3. Colab**
 - [x] "Click here to run this notebook on Colab" cell after the title of all six notebooks; solutions also link to the version with blanks (2026-10-21). `remove_soln.py` points the student version's cell at itself. README table: step 5
@@ -44,7 +44,7 @@ Numbered tasks for tracking work. Each task has a permanent number; add new task
 - [x] Everything else under "Content issues" (items 1–7 decided and done, 2026-10-21)
 
 **5. README in the standard shape**
-- [ ] Title, badge, author, self-study line, abstract, level, length (ask Allen), outline, notebook table with Colab links, slides, recordings with tags, running instructions, next steps (*Think Complexity*, hub), license; `LICENSE` exists (MIT)
+- [x] README rewritten (2026-10-21): title, badge, author, self-study line, abstract (from the notebooks), *Think Complexity* 2e, hub link, level (introductory; basic Python, Allen), length (about 3 hours, Allen), outline, notebook table with Colab links, slides (link from Allen), recordings (SciPy 2019 with tag `scipy-2019`; PyCon US 2018, 2017), running instructions (Colab, pip, mamba), next steps, license (code MIT, text CC BY-NC-SA 4.0); `LICENSE` exists (MIT). Binder and Anaconda instructions dropped. All links return 200
 
 **6. Site and visibility** (self-study; Allen chose a small Jupyter Book site on `gh-pages`, 2026-10-21)
 - [ ] `jb/` from the BayesMadeSimple template: landing page plus the three solution notebooks

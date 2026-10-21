@@ -1,122 +1,77 @@
-## Complexity Science Tutorial
+# Complexity Science
 
+[![tests](https://github.com/AllenDowney/ComplexityScience/actions/workflows/tests.yml/badge.svg)](https://github.com/AllenDowney/ComplexityScience/actions/workflows/tests.yml)
 
-I presented this tutorial at PyCon US 2017 (with Jason Woodard) and 2018, and at SciPy 2019. The most recent recording is [SciPy 2019](https://www.youtube.com/watch?v=ccA6ghSW1Iw); earlier ones are from PyCon [2018](https://www.youtube.com/watch?v=F0uiLhZmtN4) and [2017](https://www.youtube.com/watch?v=qHWhy3PWhes).
+[Allen Downey](https://allendowney.com)
+
+This is self-study material: the workshop is not offered live now, but the notebooks are maintained and run on Colab.
+
+This tutorial is a hands-on introduction to complexity science, using Python to build and explore simple models that produce surprisingly complex behavior. We start with agent-based models: Schelling's model of segregation, and a variation based on Bill Bishop's *The Big Sort*. Then we explore cellular automata with Conway's Game of Life, including still lifes, oscillators, spaceships, Methuselahs, and the glider gun, and see how to implement it efficiently with NumPy and SciPy. Finally, we use NetworkX to analyze the degree distribution of a Facebook social network, look at power laws and the friendship paradox, and compare the data with the Barabási–Albert model. For each part, there is a Jupyter notebook where you can run the code and work on exercises.
+
+The examples in this tutorial are from my book, [*Think Complexity*, 2nd edition](https://greenteapress.com/wp/think-complexity-2e/), and a class I taught at Olin College.
 
 This is one of [my workshops and tutorials](https://allendowney.github.io/#workshops).
 
+**Level:** introductory. You should be familiar with basic Python and Jupyter notebooks; some experience with NumPy helps. You don't need to know anything about complexity science.
 
-Allen Downey
+**Length:** about 3 hours.
 
-This is the repository for a tutorial on Complexity Science.  
+## Outline
 
-The material is based on my book,
-[*Think Complexity*](http://greenteapress.com/wp/think-complexity-2e/),
-2nd edition, and a class I teach at Olin College.
+1. **Agent-based models of segregation:** Schelling's model, implemented with NumPy arrays and 2-D correlation; then the Big Sort, where agents choose neighborhoods with people like themselves.
+2. **Game of Life:** still lifes, oscillators, and spaceships; Methuselahs; Conway's conjecture, the glider gun, and the puffer train; an efficient implementation with correlation and a lookup table; and Highlife, a variation with one more rule.
+3. **Scale-free networks:** graphs with NetworkX; the degree distribution of a Facebook network; the friendship paradox; power law distributions; and the Barabási–Albert model.
 
-### Installation instructions
+Each notebook comes in two versions: one with blanks for the exercises, and one with solutions.
 
-Please try to install everything you need for this tutorial ahead of time!
-You have two options:
+| Notebook | Exercises | Solutions |
+|---|---|---|
+| 1. Agent Based Models of Segregation | [Run on Colab](https://colab.research.google.com/github/AllenDowney/ComplexityScience/blob/master/01_workshop.ipynb) | [Run on Colab](https://colab.research.google.com/github/AllenDowney/ComplexityScience/blob/master/soln/01_workshop.ipynb) |
+| 2. Game of Life | [Run on Colab](https://colab.research.google.com/github/AllenDowney/ComplexityScience/blob/master/02_workshop.ipynb) | [Run on Colab](https://colab.research.google.com/github/AllenDowney/ComplexityScience/blob/master/soln/02_workshop.ipynb) |
+| 3. Scale-Free Networks | [Run on Colab](https://colab.research.google.com/github/AllenDowney/ComplexityScience/blob/master/03_workshop.ipynb) | [Run on Colab](https://colab.research.google.com/github/AllenDowney/ComplexityScience/blob/master/soln/03_workshop.ipynb) |
 
-1. Install Jupyter and the other libraries on your laptop and download my code from GitHub.
+[Slides for this tutorial are here](https://docs.google.com/presentation/d/e/2PACX-1vRccKWgJoVoU_VYIh80LyVeLOy-j6DmMVPACFW0Owm5mtXDt4n0p-zcSZzeSYW-vxZOP3thY_AOQjgb/pub?start=false&loop=false&delayms=3000).
 
-2. Run the Jupyter notebooks on a virtual machine on Binder.
+## Recordings
 
-I'll provide instructions for both.
+I presented this tutorial at PyCon US 2017 (with Jason Woodard), PyCon US 2018, and SciPy 2019. The code in the videos is not the current version; the tag after the SciPy link is the version of the code that goes with it. The PyCon tutorials predate this repository.
 
+* [SciPy 2019](https://www.youtube.com/watch?v=ccA6ghSW1Iw): tag [`scipy-2019`](https://github.com/AllenDowney/ComplexityScience/tree/scipy-2019)
+* [PyCon US 2018](https://www.youtube.com/watch?v=F0uiLhZmtN4)
+* [PyCon US 2017](https://www.youtube.com/watch?v=qHWhy3PWhes)
 
-### Option 1
+## Running the notebooks
 
-Code for this workshop is in a Git repository on Github.  
-If you have a Git client installed, you should be able to download it by running:
+The easiest way to run the notebooks is on Colab: click one of the links above. You need a Google account, but you don't have to install anything.
 
-```
-git clone --depth 1 https://github.com/AllenDowney/ComplexityScience
-```
-
-Otherwise you can download the repository in [this zip file](https://github.com/AllenDowney/ComplexityScience/archive/master.zip).
-If you unzip it, you should get a directory named `Complexity Science`.
-
-To run the code, you need Python 3 and the following libraries:
-
-```
-  - jupyter
-  - numpy
-  - matplotlib
-  - seaborn
-  - pandas
-  - scipy
-  - networkx=2.*
-  - ffmpeg
-  - empyrical-dist
-```
-
-I highly recommend installing Anaconda, which is a Python distribution that makes it
-easy to install these libraries.  It works on Windows, Mac, and Linux, and because it does a
-user-level install, it will not interfere with other Python installations.
-
-[Information about installing Anaconda is here](https://www.anaconda.com/distribution/).
-
-After installing Anaconda, you can create an environment that contains the libraries for
-this tutorial:
+To run them on your own computer, you need Python 3 with Jupyter, NumPy, SciPy, Matplotlib, Seaborn, NetworkX, and [empiricaldist](https://pypi.org/project/empiricaldist/). You can [download the code in this zip file](https://github.com/AllenDowney/ComplexityScience/archive/master.zip), or clone the repository:
 
 ```
+git clone https://github.com/AllenDowney/ComplexityScience
 cd ComplexityScience
-conda env create -f environment.yml
-conda activate ComplexityScience
 ```
 
-If you don't want to create an environment, you can install the libraries you need in
-the "base" environment
+Then install the packages with pip:
 
 ```
-conda install jupyter numpy matplotlib seaborn pandas scipy networkx ffmpeg pip
-pip install empyrical-dist
+pip install -r requirements.txt
 ```
 
-To start Jupyter, run:
+Or, if you use conda or mamba, create an environment:
 
 ```
-cd ComplexityScience
-jupyter notebook
+mamba env create -f environment.yml
+mamba activate ComplexityScience
 ```
 
-Jupyter should launch your default browser or open a tab in an existing browser window.
-If not, the Jupyter server should print a URL you can use.  For example, when I launch Jupyter, I get
+Then run `jupyter lab` and open `01_workshop.ipynb`.
 
-```
-~/ComplexityScience$ jupyter notebook
-[I 10:03:20.115 NotebookApp] Serving notebooks from local directory: /home/downey/ComplexityScience
-[I 10:03:20.115 NotebookApp] 0 active kernels
-[I 10:03:20.115 NotebookApp] The Jupyter Notebook is running at: http://localhost:8888/
-```
+The Game of Life notebook also mentions two scripts, `LifeRabbits.py` and `LifePuffer.py`, that run longer animations in a window; they need a local installation.
 
-In this case, the URL is [http://localhost:8888](http://localhost:8888).  
-When you start your server, you might get a different URL.
-Whatever it is, if you paste it into a browser, you should should see a home page with a list of the
-notebooks in the repository.
+## Next steps
 
-Click on `01_workshop.ipynb`.  It should open the first notebook for the tutorial.
+To go further, read [*Think Complexity*, 2nd edition](https://greenteapress.com/wp/think-complexity-2e/), which is free online, or see [my other workshops](https://allendowney.github.io/#workshops).
 
-Select the cell with the import statements and press "Shift-Enter" to run the code in the cell.
-If it works and you get no error messages, **you are all set**.  
+## License
 
-If you get error messages about missing packages, you can install the packages you need.
-
-
-### Option 2
-
-You can run my notebooks in a virtual machine on Binder. To launch the VM, press this button:
-
- [![Binder](http://mybinder.org/badge.svg)](http://mybinder.org:/repo/allendowney/ComplexityScience)
-
-You should see a home page with a list of the files in the repository.
-
-If you want to try the exercises, open `01_workshop.ipynb`. 
-You should be able to run the notebooks in your browser and try out the examples.  
-
-However, be aware that the virtual machine you are running is temporary.  
-If you leave it idle for more than an hour or so, it will disappear along with any work you have done.
-
-Special thanks to the generous people who run Binder, which makes it easy to share and reproduce computation.
+The code is available under the [MIT License](LICENSE). The text is available under the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0/).
